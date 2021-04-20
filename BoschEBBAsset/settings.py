@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'm%1p5=5cy7$9m!n)-!s*s)545uji_-mvaz@+*)+9pskk*!$yf$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['BoschEBBAsset.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
