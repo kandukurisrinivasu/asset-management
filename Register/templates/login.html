@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body style ="background: url(https://lh3.googleusercontent.com/proxy/JQh62MTTATS-Se0NRxEAuq8e8eTgfL8sEE4qwSUkoTrKe3TtkYLXpqtq0wUBWLgqBZIrKd8mOOI0RcDhw4TKfii3C7H69bj6b1SJaWgS1cbJGAPqfNTXeIKSRtpDbTM);background-size:100%;">
+  <pre><center>
+      <h1><b>Sign In!</b></h1>
+  <form action="login" method="post">
+
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="UserName"><br>
+      <input type="password" name="password" placeholder="Password"><br>
+      <input type="submit">
+
+      <h2><b>Don't have an account ?</b><a class="navbar-link" href="{% url 'register' %}"><b>Sign up</b></a></h2>
+      <a class="navbar-link" href="/"><b>Back To Homepage</b></a>
+      <p><a href="{% url 'password_reset' %}"><b>Forgotten your password?</b></a></p>
+
+
+
+  </form>
+
+
+     <div>
+        {% for message in messages %}
+        <h3>{{message}}</h3>
+        {% endfor %}
+    </div>
+
+  </center></pre>
+
+</body>
+</html>

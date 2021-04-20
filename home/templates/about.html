@@ -1,0 +1,20 @@
+
+{% block body_block %}
+{% load static %}
+    <div class="card" style="width: 18rem;">
+  <img src="{% static 'images/images2.png' %}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">For more updates!</h5>
+  <ul class="list-group list-group-flush">
+  </ul>
+  <div class="card-body">
+    <a href="#" class="card-link">Check this out</a>
+  </div>
+</div>
+    <h1>Robert Bosch EBB</h1>
+    <h2>Asset Management and tracking</h2>
+    <h2>Year : {{ time | date:'Y' }}</h2>
+    <h2>Month : {{ time | date:'M' }}</h2>
+     <li><a class="navbar-link" href="{% url 'homepage' %}"><b>Back</b></a>
+{% endblock %}
+
