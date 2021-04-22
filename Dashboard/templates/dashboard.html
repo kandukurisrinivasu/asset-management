@@ -10,7 +10,7 @@
 
     <title>EBB User profile</title>
   </head>
-  <body>
+  <body text="red" style ="background: url(https://usercontent.one/wp/www.listenchampion.de/wp-content/uploads/2017/11/BoschParkhaus-pjt.jpg);background-size:100%;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     {% if user.is_authenticated %}
@@ -25,10 +25,13 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-                <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
+          </li>
+
+          <li><a class="nav-link active" aria-current="page" href="{% url 'updateform' %}">Edit Profile</a></li>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Action</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -66,7 +69,4 @@
 
 
   </body>
-  <pre><center>
- <a class="navbar-link" href="/"><b>Back To Homepage</b></a>
-  </center></pre>
 </html>

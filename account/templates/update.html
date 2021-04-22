@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Page</title>
+</head>
+<body text="white" style ="background: url(https://img.etimg.com/thumb/msid-77804371,width-1200,height-900/industry/auto/auto-news/government-should-announce-special-stimulus-package-for-auto-industry-bosch.jpg);background-size:100%;">
+    <pre><center>
+        <h1><b>Edit your data</b></h1>
+        <form action = 'updateProfile' method="post"> <!--action blank means form automatically handle the response-->
+            <!-- Very Important csrf Token -->
+            {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" name="register">
+    </form>
+    </center></pre>
+    <pre><center>
+<a class="nav-link active" aria-current="page" href="{% url 'dashpage' %}"><h1><b>Back</b></h1></a>
+    </center></pre>
+</body>
+</html>

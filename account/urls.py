@@ -11,7 +11,8 @@ urlpatterns = [
     #path('register/', views.register,name="register_url"),
     #path('logout/',LogoutView.as_view(next_page='Dashboard'),name="logout"),
 
-    path('', views.regform, name='registration form')
+    path('', views.regform, name='registration form'),
+    path('update/', views.updateProfile, name='updateform')
 ]
 #if settings.DEBUG:
 #    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

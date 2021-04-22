@@ -1,5 +1,4 @@
 
-{% block body_block %}
 {% load static %}
     <div class="card" style="width: 18rem;">
   <img src="{% static 'images/images2.png' %}" class="card-img-top" alt="...">
@@ -11,10 +10,10 @@
     <a href="#" class="card-link">Check this out</a>
   </div>
 </div>
+    </div>
     <h1>Robert Bosch EBB</h1>
     <h2>Asset Management and tracking</h2>
     <h2>Year : {{ time | date:'Y' }}</h2>
     <h2>Month : {{ time | date:'M' }}</h2>
      <li><a class="navbar-link" href="{% url 'homepage' %}"><b>Back</b></a>
-{% endblock %}
 
