@@ -20,7 +20,7 @@ Follow this steps https://www.djangoproject.com/download/
 
 5) Now each and every app create templates and static folder, templates for html files whereas static for javascript ,css and images files
 
-## Edit the project setting
+## Edit the project setting 
 
 Add all the apps in the project settings.py file
 ![img.png](img.png)
