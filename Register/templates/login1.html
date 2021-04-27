@@ -1,42 +1,56 @@
 
 <!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
 </head>
-<body>
+{% load static %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css" />
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/semantic.rtl.min.css"/>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.1/nunjucks.min.js"></script>
+
+<body style ="background: url(https://pbs.twimg.com/profile_images/1070636563971932160/rDpeqMjm_400x400.jpg);background-size:100%;">
   <pre><center>
-  <form action="login" method="post">
+      <h1><b>Sign In!</b></h1>
+       <script src="{% static 'js/login.js' %}"></script>
+      <div class="content-section col-md-8 col-md-offset-2">
+  <center>
+  <form action="login" method="post" >
 
       {% csrf_token %}
-      <div class="row mb-3">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3">
-    </div>
-  </div>
-      <div class="row mb-3">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3">
-    </div>
-  </div>
 
-       <div class="row mb-3">
-    <div class="col-sm-10 offset-sm-2">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck1">
-        <label class="form-check-label" for="gridCheck1">
+      <input type="text" name="username" placeholder="UserName"><br>
+      <input type="password" name="password" placeholder="Password"><br>
+
+
+     <button style="background: black; font-size: 2rem; padding:1%;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-log-in"></span> &nbsp; login</button>
+      <sub style="text-align: left;"><a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:2%; cursor:pointer; margin-right:2%;"><h2><b>don't have account,sign up</b></h2></a></sub>
+      <!--<h2><b>Don't have an account ?</b><a class="navbar-link" href="{% url 'register' %}"><b>Sign up</b></a></h2>-->
+      <a class="navbar-link" href="/"><b>Back To Homepage</b></a>
+      <p><a href="{% url 'password_reset' %}"><b>Forgotten your password?</b></a></p>
+
 
 
   </form>
+  </center>
+
 
      <div>
         {% for message in messages %}
         <h3>{{message}}</h3>
         {% endfor %}
     </div>
+
   </center></pre>
+
 </body>
 </html>

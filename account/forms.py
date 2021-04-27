@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 from django.contrib.auth.models import User
 from django.core import validators
 
@@ -35,6 +36,11 @@ class editForm(forms.Form):
     Team_name=forms.CharField()
     age = forms.IntegerField()
     upload_your_photo=forms.FileField()
+
+class upload(forms.ModelForm):
+    class Meta:
+        model=assetOwner
+        fields=('f_name','l_name','asset_num', 'asset_type', 'group', 'team_name')
 
     #class Meta:
      #   model=User

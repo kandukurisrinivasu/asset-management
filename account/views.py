@@ -2,6 +2,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from .models import *
 
 # Create your views here.
 #def home(request):
@@ -72,6 +73,15 @@ def updateProfile(request):
         #u_form = forms.editForm(instance=request.user)
 
     return render(request, 'update.html', {'html':html, 'form':u_form})
+
+def excelUpload(request):
+    assets= assetOwner.objects.all()
+    context={
+        'Asset':assets,
+        'Header':'Asset details'
+    }
+    return render(request, 'excel.html' ,context)
+
 
 
 
