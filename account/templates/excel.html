@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Excel Data</title>
+</head>
+<body background="logo.jpg">
+<h1>Upload the user data</h1>
+<h2>The data format should be in xlsx format</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+
+  </form>
+
+
+
+</body>
+<a  href="{% url 'addUser' %}"><h2><b>Back</b></h2></a>
+</html>

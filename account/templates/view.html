@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asset list</title>
+</head>
+{% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}"/>
+<body>
+
+<table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+      <tr>
+          <th>Sl No</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Age</th>
+          <th>Group</th>
+          <th>Team Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for asset in assets %}
+    <tr>
+        <td>{{ asset.sID}}
+        <td>{{ asset.f_name }}</td>
+        <td>{{ asset.l_name }} $</td>
+        <td>{{ asset.email }}</td>
+        <td>{{ asset.Mob }}</td>
+        <td>{{ asset.age }}</td>
+        <td>{{ asset.group }}</td>
+        <td>{{ asset.team_name}}</td>
+        <td>
+            <a href ="/edit/{{student.id}}"><span class="btn btn-success">Edit</span></a>
+            <a href ="/delete/{{student.id}}" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+
+    <table>
+
+</table>
+
+</body>
+</html>
