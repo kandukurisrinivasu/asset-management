@@ -1,87 +1,59 @@
+from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.contrib import messages
+from .forms import *
+from .models import assetOwner
+#from .resources import AssetResources
+from tablib import Dataset
 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from .models import *
-
-# Create your views here.
-#def home(request):
- #   return render(request,'home.html')
-#@login_required
-#def Dashboard(request):
-#    return render(request,'Dashboard.html')
-
-#def register(request):
-#    if request.method=='POST':
- #       form=UserCreationForm(request.POST)
-  #      if form.is_valid():
-   #         form.save()
-    #        return redirect('login_url')
-
-    #else:
-     #   form=UserCreationForm()
-
-    #return render(request,'registration/register.html',{'form':form})
-
-from django.shortcuts import render
-from . import forms
-from django.contrib.auth.decorators import login_required
-from .forms import editForm
-
-
-IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
-sender='saikatkiit218@gmail.com'
-def regform(request):
-    form = forms.SignUp()
-    if request.method == 'POST':
-        form = forms.SignUp(request.POST,request.FILES)
-        sub="Welcome to the EBB Tracking tool"
-        Message= "You hace successfully registered in Bosch EBB tracking tools"
-        recipient=str(form['email'].value())
-        send_mail(sub,Message, sender,[recipient],fail_silently=False)
-        html = 'we have recieved this form again'
+def emp(request):
+    if request.method=="POST":
+        form=asset(request.POST)
         if form.is_valid():
-            user_pr = form.save(commit=False)
-            user_pr.display_picture = request.FILES['display_picture']
-            file_type = user_pr.display_picture.url.split('.')[-1]
-            file_type = file_type.lower()
-            if file_type not in IMAGE_FILE_TYPES:
-                return render(request,'error.html')
-            user_pr.save()
-            html=html+"The form is valid"
+            try:
+                form.save()
+                return redirect('/view')
+            except:
+                pass
     else:
-        html = 'welcome to EBB asset tracking tool for the first time'
-    return render(request, 'signup.html', {'html': html, 'form': form})
+        form=asset()
+        return render(request,'asset.html',{'form':form})
 
-def updateProfile(request):
-    u_form=forms.editForm()
-    if request.method=='POST':
-        u_form = forms.editForm(request.POST,request.FILES,instance=request.user)
-        html='We recieved update page'
-        if u_form.is_valid():
-            user_pr = u_form.save(commit=False)
-            user_pr.display_picture = request.FILES['display_picture']
-            file_type = user_pr.display_picture.url.split('.')[-1]
-            file_type = file_type.lower()
-            if file_type not in IMAGE_FILE_TYPES:
-                return render(request, 'error.html')
-            user_pr.save()
-            html=html + 'the update form is valid'
+def view(request):
+    assets=assetOwner.objects.all()
+    return render(request, "view.html" ,{'assets': assets})
 
-    else:
-        html='Welcome to the udate page'
-        #u_form = forms.editForm(instance=request.user)
+def delete(request,id):
+    assets=assetOwner.objects.get(id=id)
+    assets.delete()
+    return redirect('/view')
 
-    return render(request, 'update.html', {'html':html, 'form':u_form})
+def edit(request,id):
+    assets=assetOwner.objects.get(id=id)
+    return render(request, 'edit.html' ,{'assets':assets})
 
-def excelUpload(request):
-    assets= assetOwner.objects.all()
-    context={
-        'Asset':assets,
-        'Header':'Asset details'
-    }
-    return render(request, 'excel.html' ,context)
+def excel_upload(request):
+    return render(request, 'excel.html')
+#    if request.method=='POST':
+#        asset_resource=AssetResources()
+#        dataset=Dataset()
+#        new_asset=request.FILES['myFile']
 
-
-
-
+        ## file validation
+#        if not new_asset.name.endswith('xlsx'):
+#            messages.info(request,'wrong format')
+#            return render(request,'upload.html')
+#        imported_data=dataset.load(new_asset.read(),format='xlsx')
+#        for data in imported_data:
+#            value=assetOwner(
+#                data[0],
+#                data[1],
+#                data[2],
+#                data[3],
+#                data[4],
+#                data[5],
+#                data[6],
+#                data[7],
+#                data[8]
+#            )
+#            value.save()

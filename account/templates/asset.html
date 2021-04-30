@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+       <a  href="{% url 'homepage' %}"><h1><b>Home</b></h1></a>
+
+</head>
+<b><body text="white" style ="background: url(https://img1.pnghut.com/6/13/7/bNRZLFVtFM/robert-bosch-llc-service-power-tool-original-equipment-manufacturer.jpg);background-size:100%;">
+<form method="post" class="post-form" action='view/'>
+    {% csrf_token %}
+
+    <div class="container">
+        <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"></label>
+            <div class="col-sm-4">
+                <center>
+                                <h3><b>Enter Asset details</b></h3>
+                </center>
+            </div>
+        </div>
+        <br>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset Id</label>
+            <div class="col-sm-4">
+                {{form.sID}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset First Name</label>
+            <div class="col-sm-4">
+                {{form.f_name}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset Last Name</label>
+            <div class="col-sm-4">
+                {{form.l_name}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset email</label>
+            <div class="col-sm-4">
+                {{form.email}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset Mobile number</label>
+            <div class="col-sm-4">
+                {{form.Mob}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset Photo</label>
+            <div class="col-sm-4">
+                {{form.upload_photo}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset group</label>
+            <div class="col-sm-4">
+                {{form.group}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"> Asset team</label>
+            <div class="col-sm-4">
+                {{form.team_name}}
+            </div>
+         </div>
+             <div class ="form-group row">
+            <label class= "col-sm-1 col-form-label"></label>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a  href="{% url 'excelpage' %}">Upload via excel</a>
+
+
+            </div>
+
+         </div>
+
+    </div>
+
+
+</form>
+</body>
+</html>

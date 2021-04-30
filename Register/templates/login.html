@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Bosch EBB Login Page</title>
 </head>
 {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}"/>
@@ -21,12 +21,9 @@
 
       <input type="text" name="username" placeholder="UserName"><br>
       <input type="password" name="password" placeholder="Password"><br>
-
-
-     <button style="background: black; font-size: 2rem; padding:1%;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-log-in"></span> &nbsp; login</button>
-      <sub style="text-align: left;"><a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:2%; cursor:pointer; margin-right:2%;"><h2><b>don't have account,sign up</b></h2></a></sub>
+      <button style="background: black; font-size: 2rem; padding:1%;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-log-in"></span>login</button>
+      <h2><b>Don't have an account ?</b></h2>  <sub style="text-align: middle;"><a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:1%; cursor:pointer; margin-right:1%;"><h2><b>sign up</b></h2></a></sub>
       <!--<h2><b>Don't have an account ?</b><a class="navbar-link" href="{% url 'register' %}"><b>Sign up</b></a></h2>-->
-      <a class="navbar-link" href="/"><b>Back To Homepage</b></a>
       <p><a href="{% url 'password_reset' %}"><b>Forgotten your password?</b></a></p>
 
 
