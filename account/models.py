@@ -8,12 +8,9 @@ class assetOwner(models.Model):  ## name of the table
     email=models.EmailField()
     Mob=models.IntegerField()
     age=models.IntegerField()
-    upload_photo=models.FileField()
+    upload_photo=models.ImageField()
     group=models.CharField(max_length=100, blank=False)
     team_name=models.CharField(max_length=100, blank=False)
 
-    class Meta:
-        db_table="AssetMember"
-
-
-
+    def __str__(self):
+        return self.f_name

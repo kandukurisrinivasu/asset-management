@@ -2,20 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css ADD HERE-->
+
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
     <title>Upload Excel Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body background="logo.jpg">
-<h1>Upload the user data</h1>
-<h2>The data format should be in xlsx format</h2>
-<form method="post" enctype="multipart/form-data">
+<body text="red" style ="background: url(https://www.bosch-connectivity.com/media/home/bosch-supergraphic-light-blue_res_800x450.jpg);background-size:100%;">
+<nav class="navbar navbar-light" style="background-color:#FF0033;">
+        <a href="#" class="navbar-brand" style="background-color:#FFCC33;color:#000000;border-width:10px;border-color:#FFCC33;border-style:solid;border-spacing:30px;border-radius: 5px;">Excel file upload</a>
+        <a href="{% url 'addUser' %}" class="navbar-link btn-lg" style="background-color:#FFCC33;color:#000000;">BACK</a>
+</nav>
+  <center>
+      <h1>Upload the user data</h1>
+      <h2>The data format should be in xlsx format</h2>
+<div class="ui container">
+    <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" name="myfile">
-    <button type="submit">Upload</button>
-
-  </form>
-
-
-
+    <button type="submit" class="ui button primary">confirm</button>
+    </form>
+</div>
+  </center>
 </body>
-<a  href="{% url 'addUser' %}"><h2><b>Back</b></h2></a>
+
 </html>

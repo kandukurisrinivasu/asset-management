@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Asset list</title>
-</head>
 {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}"/>
-  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}"/>
-<body>
+<html>
+<head>
+    <title>Asset Records</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<b><body text="white" style ="background: url(https://www.bosch-connectivity.com/media/home/bosch-supergraphic-light-blue_res_800x450.jpg);background-size:100%;">
+<nav class="navbar navbar-light" style="background-color:#FF0033;">
+    <a href="#" class="navbar-brand" style="background-color:#FFCC33;color:#000000;border-width:10px;border-color:#FFCC33;border-style:solid;border-spacing:30px;border-radius: 5px;">Bosch Asset Management</a>
 
+    <a href="{% url 'addUser' %}" class="navbar-link btn-lg" style="background-color:#FFCC33;color:#000000;">Enter Asset Details</a>
+</nav>
+<br>
 <table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
       <tr>
@@ -35,8 +39,8 @@
         <td>{{ asset.group }}</td>
         <td>{{ asset.team_name}}</td>
         <td>
-            <a href ="/edit/{{student.id}}"><span class="btn btn-success">Edit</span></a>
-            <a href ="/delete/{{student.id}}" class="btn btn-danger">Delete</a>
+            <a href="update/{{book.id}}" class="btn btn-warning" id = '{{asset.assst_id}}'>edit</a>
+       <a href="delete/{{book.id}}" class="btn btn-danger" id = '{{asset.asset_id}}'>delete</a>
         </td>
     </tr>
     {% endfor %}
@@ -45,6 +49,5 @@
     <table>
 
 </table>
-
 </body>
 </html>

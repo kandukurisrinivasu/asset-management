@@ -1,6 +1,6 @@
 # Bosch EBB ASSET MANAGEMENT SYSTEM
 
-##Installation
+## Installation
 
 1. Install Python
 Install python-3.7.2 and python-pip. Follow the steps from the below reference document based on your Operating System. Reference: https://docs.python-guide.org/starting/installation/
@@ -9,7 +9,25 @@ Install python-3.7.2 and python-pip. Follow the steps from the below reference d
 2. Install Django
 Follow this steps https://www.djangoproject.com/download/
    
-##Set up  the Project environment in pycharm
+## Required python packages of this project
+
+1. Install pandas :- For reading csv files
+https://pypi.org/project/pandas/
+   
+
+2. Install django-import-export packages: For importing excel file into the server and connecting into the database
+
+"pip install django-import-export" in the command prompt. 
+
+
+3. Install mysqlclient: For connecting from django server to mysql database.
+
+"pip install mysqlclient" in the command prompt
+
+
+4. Install csv,tablib : For excel/csv dataset reading.
+   
+## Set up  the Project environment in pycharm
 1) Creating a new project of Project name BoschEBBAsset in the pycharm
 
 2) Go to the terminal of the project
@@ -52,13 +70,13 @@ Once the user register/sign in successfully the homepage will appear
 
 
 Asset user records upoading page
-![img_13.png](img_13.png)
+![img_18.png](img_18.png)
 
 Asset data can be upload via excel 
-![img_14.png](img_14.png)
+![img_20.png](img_20.png)
 
 Asset data will be stored in table
-![img_15.png](img_15.png)
+![img_19.png](img_19.png)
 
 Feedback page:
 ![img_16.png](img_16.png)
