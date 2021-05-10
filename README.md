@@ -41,10 +41,10 @@ https://pypi.org/project/pandas/
 ## Edit the project setting
 
 Add all the apps in the project settings.py file
-![img.png](img.png)
+![img_21.png](img_21.png)
 
 ## Adding the URLS of the project file
-![img_1.png](img_1.png)
+![img_22.png](img_22.png)
 
 ## Starting the server
 1) python manage.py makemigrations
@@ -56,27 +56,17 @@ Add all the apps in the project settings.py file
 4) Click on the local host http://127.0.0.1:8000/
 First user need to sign in the page , if new user
    then sign up the page first
-Sign in page:![img_10.png](img_10.png)
+Sign in page:![img_23.png](img_23.png)
    
 SignUp page:
-![img_11.png](img_11.png)
+![img_24.png](img_24.png)
 
 Forget password page:
-![img_7.png](img_7.png)
+![img_25.png](img_25.png)
 
-Home page:
-Once the user register/sign in successfully the homepage will appear
-![img_12.png](img_12.png)
-
-
-Asset user records upoading page
-![img_18.png](img_18.png)
-
-Asset data can be upload via excel 
-![img_20.png](img_20.png)
-
-Asset data will be stored in table
-![img_19.png](img_19.png)
+Dashboard:
+Once the user register/sign in successfully the Dasgboard will appear
+![img_26.png](img_26.png)
 
 Feedback page:
 ![img_16.png](img_16.png)
