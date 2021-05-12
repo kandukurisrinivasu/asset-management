@@ -5,11 +5,11 @@ from django.contrib.auth.views import LogoutView
 
 
 urlpatterns = [
-    path('signup/', views.register, name='signup'),
-    path('', views.login, name='login'),
+    path('signup/', views.register_user, name='signup'),
+    path('login/', views.login_view, name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
     path('edituser/', views.edituser, name="edituser"),
-    path("update/<str:username>/", views.update, name="update"),
+    path("update/", views.update, name="update"),
 
 
 

@@ -1,6 +1,6 @@
 {% extends "layouts/base_main.html" %}
 
-{% block title %} Add Asset User {% endblock %}
+{% block title %} Register {% endblock %}
 
 <!-- Specific Plugin CSS goes HERE -->
 {% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
@@ -10,126 +10,93 @@
 
 {% block content %}
 
- <div class="container-fluid page-body-wrapper full-page-wrapper">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
     <div class="row w-100 m-0">
-      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg-s1">
-        <div class="card col-lg-6 mx-auto">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+        <div class="card col-lg-4 mx-auto">
           <div class="card-body px-5 py-5">
             <h3 class="card-title text-left mb-3">
-              <h3>Add New Asset User </h3>
+              <a href="https://www.bosch.in/">Robert Bosch EBB</a> - Sign UP
             </h3>
 
-              <span class="mb-0 text-muted">
+            <span class="mb-0 text-muted">
               {% if msg %}
                   {{ msg | safe }}
               {% else %}
-
+                  Add your credentials
               {% endif %}
             </span>
 
-              <div class="d-flex">
+            <div class="d-flex">
               <br />
             </div>
 
-              {% if not success %}
-              <form method="post" class="post-form" action="">
+            <!-- Hide the form on success -->
+            {% if not success %}
+              <form role="form" method="post" action="">
 
                 {% csrf_token %}
 
-
-
-                <div class="col-md-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">User ID</label>
-                            <div class="col-sm-9">
-                            {{ form.username }}
-                            </div>
-                            <span class="text-error">{{ form.username.errors }}</span>
-                          </div>
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">First Name </label>
-                            <div class="col-sm-9">
-                            {{ form.first_name }}
-                            </div>
-                            <span class="text-error">{{ form.first_name.errors }}</span>
-                          </div>
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Last Name </label>
-                            <div class="col-sm-9">
-                            {{ form.last_name }}
-                            </div>
-                            <span class="text-error">{{ form.last_name.errors }}</span>
-                          </div>
-
-                         <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                            {{ form.email }}
-                            </div>
-                            <span class="text-error">{{ form.email.errors }}</span>
-                          </div>
-
-                         <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Team</label>
-                            <div class="col-sm-9">
-                            {{ user_profile.team }}
-                            </div>
-                            <span class="text-error">{{ user_profile.team.errors }}</span>
-                          </div>
-
-                         <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Location</label>
-                            <div class="col-sm-9">
-                            {{ user_profile.location }}
-                            </div>
-                            <span class="text-error">{{ user_profile.location.errors }}</span>
-                          </div>
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Group</label>
-                            <div class="col-sm-9">
-                            {{ user_profile.group }}
-                            </div>
-                            <span class="text-error">{{ user_profile.group.errors }}</span>
-                          </div>
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Ph Number</label>
-                            <div class="col-sm-9">
-                            {{ user_profile.phonenumber }}
-                            </div>
-                            <span class="text-error">{{ user_profile.phonenumber.errors }}</span>
-                          </div>
-
-                        <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Password</label>
-                            <div class="col-sm-9">
-                            {{ form.password1 }}
-                            </div>
-                            <span class="text-error">{{ form.password1.errors }}</span>
-                          </div>
-
-                          <div class="form-group row ">
-                            <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Confirm Password</label>
-                            <div class="col-sm-9">
-                            {{ form.password2 }}
-                            </div>
-                            <span class="text-error">{{ form.password2.errors }}</span>
-                          </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button class="btn btn-dark">Cancel</button>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label>Username</label>
+                  {{ form.username }}
                 </div>
-                  <h2><b>Already sign up?</b><a class="navbar-link" href="{% url 'login' %}"><b>Log in</b></a></h2>
+                <span class="text-error">{{ form.username.errors }}</span>
 
+                <div class="form-group">
+                  <label>Email</label>
+                  {{ form.email }}
+                </div>
+                <span class="text-error">{{ form.email.errors }}</span>
+
+                 <div class="form-group">
+                  <label>Location</label>
+                  {{ form.Location }}
+                </div>
+                <span class="text-error">{{ form.Location.errors }}</span>
+
+                 <div class="form-group">
+                  <label>Team Name</label>
+                  {{ form.Team_name}}
+                </div>
+                <span class="text-error">{{ form.Team_name.errors }}</span>
+
+                 <div class="form-group">
+                  <label>Group</label>
+                  {{ form.Group}}
+                </div>
+                <span class="text-error">{{ form.Group.errors }}</span>
+
+
+                <div class="form-group">
+                  <label>Password</label>
+                  {{ form.password1 }}
+                </div>
+                <span class="text-error">{{ form.password1.errors }}</span>
+
+                <div class="form-group">
+                  <label>Confirm Password</label>
+                  {{ form.password2 }}
+                </div>
+                <span class="text-error">{{ form.password2.errors }}</span>
+
+                <div class="form-group d-flex align-items-center justify-content-between">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" checked=""> Agree with terms
+                    </label>
+                  </div>
+                  <a href="{% url 'login' %}" class="forgot-pass">Use existing account</a>
+                </div>
+                <div class="text-center">
+                  <button type="submit" name="register" class="btn btn-primary btn-block enter-btn">SignUp</button>
+                </div>
+                <div class="d-flex">
+                  <br />
+                </div>
               </form>
             {% endif %}
+
 
 
           </div>
@@ -147,7 +114,3 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
-
-
-
-

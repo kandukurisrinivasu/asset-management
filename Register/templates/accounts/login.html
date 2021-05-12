@@ -27,6 +27,7 @@
 
                 {% endif %}
               </span>
+
                 <div class="d-flex">
                 <br />
               </div>
@@ -34,7 +35,7 @@
                     {% csrf_token %}
 
                 <div class="form-group">
-                  <label>User Name</label>
+                  <label>UserName</label>
                   {{ form.username }}
                 </div>
                 <div class="form-group">
@@ -53,7 +54,7 @@
                 <div class="d-flex">
                   <br />
                 </div>
-                    <h2><b>Don't have an account?</b><a class="navbar-link" href="{% url 'signup' %}"><b>SignUp</b></a></h2>
+                    <h2><b>Don't have an account?</b><a class="navbar-link" href="{% url 'signup' %}"><b>Register here!</b></a></h2>
                     <a href="{% url 'password_reset' %}" class="btn btn-link">Forgot your password?</a>
               </form>
             </div>

@@ -1,16 +1,38 @@
+{% extends  "layouts/base.html"  %}
+{% load static %} <!-- New line -->
+{% block title %} Add Asset {% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
     <meta charset="UTF-8">
     <title>Bosch EBB Feedback Page</title>
-</head>
-<body text="black" style ="background: url(https://c0.klipartz.com/pngpicture/314/556/sticker-png-film-business-marketing-video-production-companies-logo-bosch-angle-white-company-service-rectangle.png);background-size:100%;">
+
+
  <pre><centre>
      <h1><b>Welcome to the feedback page</b></h1>
      <li><a class="navbar-link" href="{% url 'add_asset' %}"><b>Back</b></a>
 
  </centre></pre>
 
-</body>
-</html>
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

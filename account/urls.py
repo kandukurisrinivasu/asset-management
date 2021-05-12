@@ -1,5 +1,6 @@
 from django.urls import path
 from .import views
+from django.urls import path, re_path
 #from BoschEBBAsset.BoschEBBAsset import settings
 from django.conf.urls.static import static
 
@@ -13,7 +14,7 @@ urlpatterns = [
 
     path("asset_search/", views.asset_search, name="asset_search"),
     path("asset_search_display/", views.asset_search_display, name="asset_search_display"),
-    path("", views.add_asset, name="add_asset"),
+    path('add', views.add_asset, name="add_asset"),
     path('export', views.export_xls, name='export'),
     path('export_pdf', views.export_pdf, name='export_pdf'),
     path('import_xls', views.import_xls, name='import_xls'),
@@ -21,6 +22,9 @@ urlpatterns = [
     path('event/new/', views.create_lab_event, name='event_new'),
     path('event/<int:event_id>/details/', views.lab_event_details, name='event-detail'),
     path("feedback/", views.feedback, name="feedback"),
+    path('table/',views.table,name='tablepage'),
+    # Matches any html file
+    re_path(r'^.*\.*', views.pages, name='pages'),
 ]
 #if settings.DEBUG:
 #    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

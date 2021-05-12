@@ -1,5 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+from django.template import loader
+from django.http import HttpResponse
+from django import template
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin # This is for authentication
 from django.views import generic
@@ -180,6 +185,7 @@ def asset_search_display(request):
 
     return render(request,'accounts/asset_search_display.html',values)
 
+@login_required(login_url="/login/")
 def add_asset(request):
     values={'form':AssetDetailsForm}
     form=AssetDetailsForm(request.POST)
@@ -256,15 +262,13 @@ def export_xls(request):
 
 
 def export_pdf(request):
-    Asset_no = request.session['AssetNo']
     Owner = request.session['Owner']
-    Asset_type = request.session['AssetTypeModel']
+    Asset_type = request.session['Asset_type']
     Group = request.session['Group']
-    Team_name = request.session['TeamName']
-    Product_line = request.session['ProductLine']
+    Team_name = request.session['Team_name']
+    Product_line = request.session['Product_line']
     Remark = request.session['Remark']
     all_data = Asset_details.objects.filter(Q(Owner__contains=Owner) &
-                                                 Q(Asset_no__contains=Asset_no) &
                                                  Q(Group__contains=Group) &
                                                  Q(Team_name__contains=Team_name) &
                                                  Q(Asset_type__contains=Asset_type) &
@@ -272,7 +276,7 @@ def export_pdf(request):
                                                  Q(Remark__contains=Remark)
                                                  )
 
-    report_name = Asset_no + "_" + Owner + "_" + Asset_type + "_" + Group + "_" + Team_name + "_" + Product_line
+    report_name = "_" + Owner + "_" + Asset_type + "_" + Group + "_" + Team_name + "_" + Product_line
 
     data = {
         "report": report_name, "date": datetime.datetime.now(), "all": all_data,
@@ -361,3 +365,32 @@ def import_xls(request):
 
 def feedback(request):
     return render(request, 'feedback.html')
+
+def table(request):
+    assets=Asset_details.objects.all()
+    return render(request,'accounts/table.html',{'assets':assets})
+
+
+@login_required(login_url="/login/")
+def pages(request):
+    context = {}
+    # All resource paths end in .html.
+    # Pick out the html file name from the url. And load that template.
+    try:
+
+        load_template = request.path.split('/')[-1]
+        context['segment'] = load_template
+
+        html_template = loader.get_template(load_template)
+        return HttpResponse(html_template.render(context, request))
+
+    except template.TemplateDoesNotExist:
+
+        html_template = loader.get_template('page-404.html')
+        return HttpResponse(html_template.render(context, request))
+
+    except:
+
+        html_template = loader.get_template('chartjs.html')
+        return HttpResponse(html_template.render(context, request))
+

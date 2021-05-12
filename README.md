@@ -59,20 +59,24 @@ First user need to sign in the page , if new user
 Sign in page:![img_23.png](img_23.png)
    
 SignUp page:
-![img_24.png](img_24.png)
+![img_30.png](img_30.png)
 
 Forget password page:
 ![img_25.png](img_25.png)
 
 Dashboard:
 Once the user register/sign in successfully the Dasgboard will appear
-![img_26.png](img_26.png)
+Some statistical analysis and some visualization of the asset records will be display here .
+![img_31.png](img_31.png)![img_26.png](img_26.png)
+
+Asset Records Display:
+![img_27.png](img_27.png)
 
 Feedback page:
-![img_16.png](img_16.png)
+![img_32.png](img_32.png)
 
-About page:
-![img_9.png](img_9.png)
+
+
 
    
 
