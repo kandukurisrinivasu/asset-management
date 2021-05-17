@@ -15,6 +15,7 @@ urlpatterns = [
     path("asset_search/", views.asset_search, name="asset_search"),
     path("asset_search_display/", views.asset_search_display, name="asset_search_display"),
     path('add', views.add_asset, name="add_asset"),
+    path('setup', views.setup, name="setup"),
     path('export', views.export_xls, name='export'),
     path('export_pdf', views.export_pdf, name='export_pdf'),
     path('import_xls', views.import_xls, name='import_xls'),
@@ -23,7 +24,10 @@ urlpatterns = [
     path('event/<int:event_id>/details/', views.lab_event_details, name='event-detail'),
     path("feedback/", views.feedback, name="feedback"),
     path('table/',views.table,name='tablepage'),
+    path('table1/',views.setup_display,name='setuptable'),
+    path('settings/',views.settings,name='settings'),
     # Matches any html file
+    path('', views.index, name='home'),
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
 #if settings.DEBUG:

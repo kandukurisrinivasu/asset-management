@@ -21,21 +21,21 @@
 
     <div class="text-right">
         <button>
-          <a id ="Export" href="{% url 'export' %}">Export xls </a>
+          <a id ="Export" href="{% url 'export' %}">Export </a>
         </button>
        </div>
-      
+
        <div class="text-right">
         <button>
           <a id ="ExportPDF" href="{% url 'export_pdf' %}">Export PDF</a>
         </button>
        </div>
-      
 
-  
+
+
   <form action="" method="POST">
       {% csrf_token %}
-  <table class="table table-striped"> 
+  <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -46,30 +46,32 @@
           <th scope="col">Team</th>
           <th scope="col">Product line</th>
           <th scope="col">Remark</th>
-          
+
         </tr>
       </thead>
-     
-      {% for data in all_data %}
-  
+
+      {% for data in all%}
+
       <tbody>
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{data.Asset_no}}</td>
+            <td>{{data.AssetNo}}</td>
             <td>{{data.Owner}}</td>
-            <td>{{data.Asset_type}}</td>
+            <td>{{data.AssetTypeModel}}</td>
             <td>{{data.Group}}</td>
-            <td>{{data.Team_name}}</td>
-            <td>{{data.Product_line}}</td>
+            <td>{{data.TeamName}}</td>
+            <td>{{data.ProductLine}}</td>
             <td>{{data.Remark}}</td>
-            
+
           </tr>
-      </tbody> 
+      </tbody>
   {% endfor %}
+
   </table>
-  
+
   </form>
-  
+
+
 {% endblock content %}
 
 <!-- Specific Plugin JS goes HERE  -->

@@ -17,21 +17,20 @@ class UserProfile(models.Model):  ## name of the table
         return self.user_name
 
 class Asset_details(models.Model):
-    Asset_no=models.CharField(max_length=50)
-    Owner=models.CharField(max_length=50)
-    Asset_type=models.CharField(max_length=50)
-    Group=models.CharField(max_length=50)
-    Team_name=models.CharField(max_length=50)
-    working_status=models.CharField(max_length=50,default='working')
-    Remark=models.CharField(max_length=50)
-    Product_line=models.CharField(max_length=50)
+    AssetNo = models.CharField(max_length=50)
+    Owner = models.CharField(max_length=50)
+    AssetTypeModel = models.CharField(max_length=50)
+    Group = models.CharField(max_length=50)
+    TeamName = models.CharField(max_length=50)
+    ProductLine = models.CharField(max_length=50)
+    Remark = models.CharField(max_length=400)
+
 
     def __str__(self):
-        return self.Asset_no
+        return self.AssetNo
 
 class Lab_event(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)# The user name from main table to base table will be same
-    Setup_name=models.CharField(max_length=30)
     Title=models.CharField(max_length=200,unique=True)
     Description=models.TextField()
     Start_date=models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)

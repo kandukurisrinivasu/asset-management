@@ -27,7 +27,7 @@
               </div>
               <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
               <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                <a href="#" class="dropdown-item preview-item">
+                <a href="{% url 'settings' %}" class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-settings text-primary"></i>
@@ -37,33 +37,13 @@
                     <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
                   </div>
                 </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-onepassword  text-info"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-dark rounded-circle">
-                      <i class="mdi mdi-calendar-today text-success"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-                  </div>
-                </a>
+
+
               </div>
             </div>
           </li>
           <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
+            <span class="nav-link">Bosch EBB Checklist</span>
           </li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="/">
@@ -73,14 +53,7 @@
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-           <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'tablepage' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-              <span class="menu-title">Asset Table</span>
-            </a>
-          </li>
+
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic-user" aria-expanded="false" aria-controls="ui-basic-user">
               <span class="menu-icon">
@@ -91,11 +64,44 @@
             </a>
             <div class="collapse" id="ui-basic-user">
               <ul class="nav flex-column sub-menu">
-
-
+                <li class="nav-item"> <a class="nav-link" href="{% url 'adduser' %}">Add New User</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'edituser' %}">Edit User</a></li>
               </ul>
             </div>
           </li>
+
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-Hardware" aria-expanded="false" aria-controls="ui-basic-Hardware">
+              <span class="menu-icon">
+                <i class="mdi mdi-briefcase "></i>
+              </span>
+              <span class="menu-title">EBB Hardware</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-Hardware">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'setup' %}">Add Hardware</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-Table" aria-expanded="false" aria-controls="ui-basic-Table">
+              <span class="menu-icon">
+                <i class="mdi mdi-folder "></i>
+              </span>
+              <span class="menu-title">EBB All Tables</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic-Table">
+              <ul class="nav flex-column sub-menu">
+               <li class="nav-item"> <a class="nav-link" href="{% url 'tablepage' %}">Asset Table</a></li>
+                 <li class="nav-item"> <a class="nav-link" href="{% url 'setuptable' %}">Hardware Table</a></li>
+              </ul>
+            </div>
+          </li>
+
+
 
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic-asset" aria-expanded="false" aria-controls="ui-basic-asset">
@@ -107,9 +113,10 @@
             </a>
             <div class="collapse" id="ui-basic-asset">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'asset_search' %}">Search Asset</a></li>
+
                 <li class="nav-item"> <a class="nav-link" href="{% url 'add_asset' %}">Add Asset</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{% url 'import_xls' %}">import Asset</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'asset_search' %}">Search Asset</a></li>
                 <!--li class="nav-item"> <a class="nav-link" href="/ui-dropdowns.html">Edit Asset</a></li-->
                 <!--li class="nav-item"> <a class="nav-link" href="/ui-typography.html">Delete Asset</a></li-->
               </ul>

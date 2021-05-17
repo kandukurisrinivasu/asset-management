@@ -66,11 +66,12 @@ Forget password page:
 
 Dashboard:
 Once the user register/sign in successfully the Dasgboard will appear
+![img_2.png](img_2.png)
 Some statistical analysis and some visualization of the asset records will be display here .
 ![img_31.png](img_31.png)![img_26.png](img_26.png)
 
 Asset Records Display:
-![img_27.png](img_27.png)
+![img_3.png](img_3.png)
 
 Feedback page:
 ![img_32.png](img_32.png)

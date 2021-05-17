@@ -11,7 +11,7 @@
 {% block content %}
 
 <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
-	<h1>EBB Assets Records</h1>
+	<h1>EBB Hardware Records</h1>
 	</div>
 
  <div class="text-right">
@@ -37,37 +37,35 @@
 <table class="table table-striped table-bordered table-sm">
     <thead class="thead-dark">
       <tr>
-          <th>Asset No</th>
-        <th>Owner</th>
-        <th>Asset Type</th>
-        <th>Group</th>
-        <th>Team name</th>
-          <th>Product Line</th>
-          <th>Remark</th>
-
+          <th scope="col">Host Name</th>
+          <th scope="col">FQDN</th>
+          <th scope="col">OS</th>
+          <th scope="col">COM PORT </th>
+          <th scope="col">Other Details</th>
 
       </tr>
     </thead>
 
     <tbody>
-    {% for asset in assets %}
+      {% for set in setups %}
     <tr>
-        <td>{{ asset.AssetNo}}
-        <td>{{ asset.Owner }}</td>
-        <td>{{ asset.AssetTypeModel }}</td>
-        <td>{{ asset.Group }}</td>
-        <td>{{ asset.TeamName }}</td>
-        <td>{{ asset.ProductLine}}</td>
-        <td>{{ asset.Remark }}</td>
-        <td></td>
+         <td>{{set.Host_name}}</td>
+            <td>{{set.FQDN}}</td>
+            <td>{{set.OS}}</td>
+            <td>{{set.COM_port_details}}</td>
+            <td>{{set.Other_details}}</td>
+            <td></td>
     </tr>
     {% endfor %}
-
-
 
 </tbody>
 
 </table>
+
+
+
+
+
 
 
 {% endblock content %}

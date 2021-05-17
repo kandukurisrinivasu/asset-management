@@ -1,0 +1,44 @@
+{% extends  "layouts/base.html"  %}
+{% load static %} <!-- New line -->
+{% block title %} Add Asset {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<a href="{% url 'edituser' %}" class="dropdown-item preview-item">
+    <div class="preview-thumbnail">
+
+            <i class="mdi mdi-settings text-success"></i>
+
+    </div>
+    <div class="preview-item-content">
+        <p class="preview-subject mb-1">Edit user profile</p>
+    </div>
+</a>
+<a href="{% url 'passchange' %}" class="dropdown-item preview-item">
+    <div class="preview-thumbnail">
+
+            <i class="mdi mdi-settings text-success"></i>
+
+    </div>
+    <div class="preview-item-content">
+        <p class="preview-subject mb-1">Edit Password</p>
+    </div>
+</a>
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

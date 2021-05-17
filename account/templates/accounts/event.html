@@ -1,5 +1,5 @@
-{% extends  "layouts/base.html"  %}
-{% block title %} Blank Page {% endblock %} 
+{% extends "layouts/base.html" %}
+{% block title %} Blank Page {% endblock %}
 <!-- Specific Plugin CSS goes HERE -->
 {% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
 
@@ -18,7 +18,7 @@
 
 <form method="post" class="post-form" action="">
 
-  {% csrf_token %}  
+  {% csrf_token %}
 
 
 <div class="form-group row ">
@@ -27,14 +27,6 @@
   {{ form.Title }}
   </div>
   <span class="text-error">{{ form.Title.errors }}</span>
-</div>
-
-    <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Title</label>
-  <div class="col-sm-9">
-  {{ form.Setup_name }}
-  </div>
-  <span class="text-error">{{ form.Setup_name.errors }}</span>
 </div>
 
 <div class="form-group row ">
@@ -47,7 +39,7 @@
 
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">start_date</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Start_date</label>
   <div class="col-sm-9 ">
   {{ form.Start_date }}
   </div>
@@ -55,7 +47,7 @@
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">start_time</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Start_time</label>
   <div class="col-sm-9"  >
   {{ form.Start_time }}
   </div>
@@ -63,7 +55,7 @@
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">end_date</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">End_date</label>
   <div class="col-sm-9 ">
   {{ form.End_date }}
   </div>
@@ -71,7 +63,7 @@
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">end_time</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">End_time</label>
   <div class="col-sm-9"  >
   {{ form.End_time }}
   </div>
@@ -83,7 +75,7 @@
     </div>
 
   </form>
-  
+
 {% endblock content %}
 
 <!-- Specific Plugin JS goes HERE  -->

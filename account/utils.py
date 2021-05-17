@@ -1,7 +1,7 @@
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
-from xhtml2pdf import pisa # it generates pdf file from html,css to pdf
+from xhtml2pdf import pisa
 
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
@@ -10,7 +10,7 @@ from .models import Lab_event
 
 # from eventcalendar.helper import get_current_user
 
-def render_to_pdf(template_src, context_dict={}): # exporting pdf file
+def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()

@@ -8,6 +8,10 @@ from .forms import LoginForm,SignUpForm #PasswordReset,EditProfileForm
 from django.core.mail import send_mail
 from .forms import UserDataForm
 from .models import UserData
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
+from .forms import PasswordChangingForm
 from django.db.models import Q
 
 # Create your views here.
@@ -74,22 +78,60 @@ def edituser(request):
 
     print(user_data)
 
-    return render(request, "accounts/edituser.html", {"user": User1, "UserProfile": UserProfile1,"msg":msg, "success" : success})
+    return render(request, "accounts/edituser_main.html", {"user": User1, "UserProfile": UserProfile1,"msg":msg, "success" : success})
 
 
 def update(request, username):
     msg = None
     success = False
-    # User.objects.all()
     User2 = User.objects.get(username=username)
-    # UserProfile2 = UserProfile.objects.get(user=username)
     form =SignUpForm(instance=User2)
-    # profile_form = UserProfileForm(instance=UserProfile2)
 
     return render(request, "accounts/edituser.html", {"form": form, "msg": msg, "success": success})
 
 
+
+
+
+
 def logout(request):
     auth.logout(request)
-    return redirect('/')
+    msg = 'You are successfully logout -login back <a href="/login">login</a>.'
+    return render(request,'accounts/logout.html',{"msg":msg})
+
+def displayUser(request):
+    form=SignUpForm(request.POST)
+    Name=form.name
+    Loc=form.Location
+    Team=form.Team_name
+    grp=form.Group
+    return render(request,'account/templates/index.html',{'Name':Name,'Loc':Loc,'Team':Team,'grp':grp})
+
+class PasswordChangeView(PasswordChangeView):
+    form_class=PasswordChangingForm
+    success_url=reverse_lazy('/')
+
+def add_user(request):
+    msg = None
+    success = False
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+
+            msg = 'User created - please <a href="/login">login</a>.'
+            success = True
+
+            # return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = SignUpForm()
+
+    return render(request, "accounts/add_user.html", {"form": form, "msg": msg, "success": success})
 

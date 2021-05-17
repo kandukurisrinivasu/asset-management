@@ -12,7 +12,7 @@
 
 
 <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
-	<h1>ADD EBB Asset Data</h1>
+	<h1>EBB Hardware SetUp details</h1>
 	</div>
 
 
@@ -26,38 +26,29 @@
  <form action="" method="POST">
     {% csrf_token %}
 	<div class="form-group row">
-	<label for="AssetNo" class="col-sm-2 col-form-label">Asset Number</label> 
-		{{form.AssetNo}}
+	<label for="HostName" class="col-sm-2 col-form-label">Host name</label>
+		{{form.Host_name}}
    </div>
 
   <div class="form-group row">
-	<label for="Owner" class="col-sm-2 col-form-label">Asset Owner</label> 
-		{{form.Owner}}
+	<label for=" FQDNNo" class="col-sm-2 col-form-label">FQDN no</label>
+		{{form.FQDN}}
   </div>
 
   <div class="form-group row">
-	<label for="AssetTypeModel" class="col-sm-2 col-form-label">Asset Type/Model</label> 
-		{{form.AssetTypeModel}}
+	<label for="OS" class="col-sm-2 col-form-label">Operating system</label>
+		{{form.OS}}
   </div>
 
   <div class="form-group row">
-	<label for="TeamName" class="col-sm-2 col-form-label">Team</label> 
-		{{form.TeamName}}
+	<label for="COM Port" class="col-sm-2 col-form-label">COM PORT </label>
+		{{form.COM_port_details}}
   </div>
      <div class="form-group row">
-	<label for="Group" class="col-sm-2 col-form-label">Group</label>
-		{{form.Group}}
+	<label for="Other Details" class="col-sm-2 col-form-label">Other details</label>
+		{{form.Other_details}}
   </div>
 
-  <div class="form-group row">
-	<label for="ProductLine" class="col-sm-2 col-form-label">Product line</label> 
-		{{form.ProductLine}}
-  </div>
-
-  <div class="form-group row">
-	<label for="Remark" class="col-sm-2 col-form-label">Remark</label> 
-		{{form.Remark}}
-  </div>
 
 
 <center></pre>

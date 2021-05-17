@@ -1,4 +1,4 @@
-{% extends "layouts/base_main.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %} Register {% endblock %}
 
@@ -16,14 +16,14 @@
         <div class="card col-lg-4 mx-auto">
           <div class="card-body px-5 py-5">
             <h3 class="card-title text-left mb-3">
-              <a href="https://www.bosch.in/">Robert Bosch EBB</a> - Sign UP
+              <a href="https://www.bosch.in/">Robert Bosch EBB</a> - Add User
             </h3>
 
             <span class="mb-0 text-muted">
               {% if msg %}
                   {{ msg | safe }}
               {% else %}
-                  Add your credentials
+                  Add multiple users
               {% endif %}
             </span>
 
@@ -86,10 +86,7 @@
                 </div>
                 <span class="text-error">{{ form.password2.errors }}</span>
 
-                <div class="form-group d-flex align-items-center justify-content-between">
 
-                  <a href="{% url 'login' %}" class="forgot-pass">Use existing account</a>
-                </div>
                 <div class="text-center">
                   <button type="submit" name="register" class="btn btn-primary btn-block enter-btn">SignUp</button>
                 </div>

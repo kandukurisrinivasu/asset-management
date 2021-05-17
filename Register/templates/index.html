@@ -74,8 +74,8 @@
         </div>
       </div>
 
-
-      <form role="form" method="post" action="">
+       <form role="form" method="post" action="">
+          {% csrf_token %}
          <span class="mb-0 text-muted">
            {{Name}}
            {{Loc}}
@@ -83,8 +83,8 @@
            {{grp}}
          </span>
        </form>
-      
-
+                
+           
           </div>
         </div>
       </div>
