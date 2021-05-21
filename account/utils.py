@@ -5,7 +5,7 @@ from xhtml2pdf import pisa
 
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
-from .models import Lab_event
+from .models import Event
 
 
 # from eventcalendar.helper import get_current_user
@@ -30,7 +30,7 @@ class Calendar(HTMLCalendar):
     # filter events by day
     def formatday(self, day, events):
         # events_per_day = "dummy event day"
-        events_per_day = events.filter(Start_date__day=day)
+        events_per_day = events.filter(start_date__day=day)
         d = ''
 
         for event in events_per_day:
@@ -55,7 +55,7 @@ class Calendar(HTMLCalendar):
         print("formatmonth")
         print(self.month)
         print(self.year)
-        events = Lab_event.objects.filter(Start_date__year=self.year, Start_date__month=self.month)
+        events = Event.objects.filter(start_date__year=self.year, start_date__month=self.month)
 
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'

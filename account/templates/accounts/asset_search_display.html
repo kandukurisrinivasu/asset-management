@@ -13,10 +13,15 @@
 
 
 
-<div class="text-right">
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-15 mx-auto">
+          <div class="card-body px-20 py-20">
+<div class="text-middle">
   
   <div class="alert alert-primary text-center" role="alert">
-    <h1>Hardware Search Report</h1>
+    <h1>Assets Search Report</h1>
     </div>
 
     <div class="text-right">
@@ -38,12 +43,13 @@
   <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
+
           <th scope="col">Asset Number</th>
           <th scope="col">Asset Owner</th>
           <th scope="col">Asset Type/Model</th>
           <th scope="col">Group</th>
           <th scope="col">Team</th>
+            <th scope="col">Location</th>
           <th scope="col">Product line</th>
           <th scope="col">Remark</th>
 
@@ -54,14 +60,19 @@
 
       <tbody>
           <tr>
-            <th scope="row">{{ forloop.counter }}</th>
+
             <td>{{data.AssetNo}}</td>
             <td>{{data.Owner}}</td>
             <td>{{data.AssetTypeModel}}</td>
             <td>{{data.Group}}</td>
             <td>{{data.TeamName}}</td>
+              <td>{{data.Loc}}</td>
             <td>{{data.ProductLine}}</td>
             <td>{{data.Remark}}</td>
+              <td><a href="/edit_asset/{{data.id}}" class="btn btn-success">Edit</a>
+                  <a href="/delete_asset/{{data.id}}" class="btn btn-danger">delete</a>
+
+              </td>
 
           </tr>
       </tbody>

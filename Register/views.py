@@ -99,13 +99,6 @@ def logout(request):
     msg = 'You are successfully logout -login back <a href="/login">login</a>.'
     return render(request,'accounts/logout.html',{"msg":msg})
 
-def displayUser(request):
-    form=SignUpForm(request.POST)
-    Name=form.name
-    Loc=form.Location
-    Team=form.Team_name
-    grp=form.Group
-    return render(request,'account/templates/index.html',{'Name':Name,'Loc':Loc,'Team':Team,'grp':grp})
 
 class PasswordChangeView(PasswordChangeView):
     form_class=PasswordChangingForm
@@ -135,3 +128,13 @@ def add_user(request):
 
     return render(request, "accounts/add_user.html", {"form": form, "msg": msg, "success": success})
 
+def displayUser(request):
+    form = SignUpForm(request.POST)
+    if form.is_valid():
+        username=form.cleaned_data['username']
+        name=form.cleaned_data['name']
+        Location=form.cleaned_data['Location']
+        Team_name=form.cleaned_data['Team_name']
+        Group=form.cleaned_data['Group']
+    context={'form':form,'username':username,'name':name,'Location':Location,'Team_name':Team_name,'Group':Group}
+    return render(request,'index.html',context)

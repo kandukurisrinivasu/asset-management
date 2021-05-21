@@ -133,16 +133,16 @@
                     </div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-                    <h6 class="p-3 mb-0">Profile</h6>
+                    <h6 class="p-3 mb-0">Settings</h6>
                     <div class="dropdown-divider"></div>
-                    <a href="{% url 'settings' %}" class="dropdown-item preview-item">
+                    <a href="{% url 'passchange' %}" class="dropdown-item preview-item">
                       <div class="preview-thumbnail">
                         <div class="preview-icon bg-dark rounded-circle">
-                          <i class="mdi mdi-settings text-success"></i>
+                      <i class="mdi mdi-onepassword  text-info"></i>
                         </div>
                       </div>
                       <div class="preview-item-content">
-                        <p class="preview-subject mb-1">Settings</p>
+                        <p class="preview-subject mb-1">Edit Password</p>
                       </div>
 
                       <div class="dropdown-divider"></div>
@@ -170,7 +170,7 @@
                       </div>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <p class="p-3 mb-0 text-center">Advanced settings</p>
+
                   </div>
                 </li>
               </ul>

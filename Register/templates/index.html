@@ -18,6 +18,18 @@
 
 {% block content %}
 
+
+<form action="displayUser" method="POST">
+         <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
+           <h1>Profile</h1>
+         </div>
+         <p>UserName :{{username}}</p>
+        <p>Name : {{name}}</p>
+         <p>Location : {{Location}}</p>
+         <p>Team : {{Team_name}}</p>
+         <p>Group : {{Group}}</p>
+       </form>
+
   <div class="content-wrapper">
     <div class="row">
       <div class="col-md-6 col-xl-4 grid-margin stretch-card">
@@ -74,15 +86,7 @@
         </div>
       </div>
 
-       <form role="form" method="post" action="">
-          {% csrf_token %}
-         <span class="mb-0 text-muted">
-           {{Name}}
-           {{Loc}}
-           {{Team}}
-           {{grp}}
-         </span>
-       </form>
+
                 
            
           </div>

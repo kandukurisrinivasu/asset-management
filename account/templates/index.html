@@ -74,16 +74,15 @@
         </div>
       </div>
 
-
-      <form role="form" method="post" action="">
-         <span class="mb-0 text-muted">
-           {{Name}}
-           {{Loc}}
-           {{Team}}
-           {{grp}}
-         </span>
+        <form action="displayUser" method="POST">
+         {% for user in users %}
+         <p>UserName : {{user.user}}</p>
+        <p>Name : {{user.name}}</p>
+         <p>Location : {{user.location}}</p>
+         <p>Team : {{user.team}}</p>
+         <p>Group : {{user.group}</p>
+         {% endfor %}
        </form>
-      
 
           </div>
         </div>

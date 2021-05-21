@@ -23,9 +23,35 @@ import openpyxl # Python library to read and write an excel file.
 import calendar
 
 
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from .utils import render_to_pdf, Calendar
+from .models import UserProfile
+from django.views import generic
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.contrib import messages
+from django.db.models import Q
+import openpyxl
+import calendar
+from django.utils.safestring import mark_safe
+from io import BytesIO
+import xlsxwriter
+from django.forms.models import model_to_dict
+from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import date
+#model_to_dict(instance)
+import datetime
+from .models import *
+from django.core.mail import send_mail
+
+
 class CalendarView(LoginRequiredMixin, generic.ListView):
     login_url = 'signup'
-    model = Lab_event
+    model = Event
     template_name = 'calendar.html'
 
     def get_context_data(self, **kwargs):
@@ -43,13 +69,15 @@ def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
-    return datetime.date.today()
+    return datetime.today()
+
 
 def prev_month(d):
     first = d.replace(day=1)
     prev_month = first - timedelta(days=1)
     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
     return month
+
 
 def next_month(d):
     days_in_month = calendar.monthrange(d.year, d.month)[1]
@@ -58,14 +86,18 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-    ''' context = super().get_context_data(**kwargs)
-    d = get_date(self.request.GET.get('month', None))
-    cal = Calendar(d.year, d.month)
-    html_cal = cal.formatmonth(withyear=True)
-    context['calendar'] = mark_safe(html_cal)
-    context['prev_month'] = prev_month(d)
-    context['next_month'] = next_month(d)
-    return context'''
+    '''
+
+        context = super().get_context_data(**kwargs)
+           d = get_date(self.request.GET.get('month', None))
+           cal = Calendar(d.year, d.month)
+           html_cal = cal.formatmonth(withyear=True)
+           context['calendar'] = mark_safe(html_cal)
+           context['prev_month'] = prev_month(d)
+           context['next_month'] = next_month(d)
+           return context
+
+       '''
 
 def calendar_test(request):
     msg     = None
@@ -80,30 +112,30 @@ def calendar_test(request):
     return render(request, "accounts/calendar.html", { "context" : context, "success" : success })
 
 
-def create_lab_event(request):
+def create_event(request):
     print("test create event \n\n\n\n")
-    form = LabEventForm(request.POST or None)
+    form = EventForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         print(request.method)
-        event =Lab_event(
+        event = Event(
             user=request.user,
-            Title=request.POST['title'],
-            Description=request.POST['description'],
-            Start_date=request.POST['start_date'],
-            End_date=request.POST['end_date'],
-            Start_time=request.POST['start_time'],
-            End_time=request.POST['end_time']
+            title=request.POST['title'],
+            description=request.POST['description'],
+            start_date=request.POST['start_date'],
+            end_date=request.POST['end_date'],
+            start_time=request.POST['start_time'],
+            end_time=request.POST['end_time']
         )
         event.save()
         messages.success(request, ('New Record Added Successfully...'))
 
         print("test create event ifififififififififi \n\n\n\n")
-        Title = request.POST['title']
-        Description = request.POST['description']
-        Start_date = request.POST['start_date']
-        End_date = request.POST['end_date']
-        Start_time = request.POST['start_time']
-        End_time = request.POST['end_time']
+        title = request.POST['title']
+        description = request.POST['description']
+        start_date = request.POST['start_date']
+        end_date = request.POST['end_date']
+        start_time = request.POST['start_time']
+        end_time = request.POST['end_time']
         # calendar_test(request)
         return render(request, "accounts/calendar.html", {})
     else:
@@ -113,18 +145,21 @@ def create_lab_event(request):
 
 
 class EventEdit(generic.UpdateView):
-    model = Lab_event
+    model = Event
     fields = ['title', 'description', 'start_time', 'end_time']
     template_name = 'event.html'
 
-def lab_event_details(request,event_id):
-    event=Lab_event.objects.get(id=event_id)
-    event_member=EventMember.objects.get(event=event)
-    value={
-        'event':event,
-        'event member':event_member
-    }
-    return render(request,'accounts/event_details.html',value)
+
+# @login_required(login_url='signup')
+def event_details(request, event_id):
+    event = Event.objects.all()
+    eventmember = EventMember.objects.all()
+    #context = {
+    #    'event': event,
+    #    'eventmember': eventmember
+    #}
+    return render(request, 'accounts/event_details.html',{'event':event,'eventmember':eventmember})
+
 
 def asset_search(request):
     submitted=False
@@ -139,6 +174,7 @@ def asset_search(request):
         AssetTypeModel = request.POST['AssetTypeModel']
         Group = request.POST['Group']
         TeamName = request.POST['TeamName']
+        Loc = request.POST['Loc']
         ProductLine = request.POST['ProductLine']
         Remark = request.POST['Remark']
         # store the data in session
@@ -146,6 +182,7 @@ def asset_search(request):
         request.session['Owner'] = request.POST['Owner']
         request.session['AssetTypeModel'] = request.POST['AssetTypeModel']
         request.session['Group'] = request.POST['Group']
+        request.session['Loc'] = request.POST['Loc']
         request.session['TeamName'] = request.POST['TeamName']
         request.session['ProductLine'] = request.POST['ProductLine']
         request.session['Remark'] = request.POST['Remark']
@@ -155,6 +192,7 @@ def asset_search(request):
 													 Q(Group__contains=Group) &
 													 Q(TeamName__contains=TeamName) &
 													 Q(AssetTypeModel__contains=AssetTypeModel) &
+                                                     Q(Loc__contains=Loc) &
 													 Q(ProductLine__contains=ProductLine)&
 													 Q(Remark__contains=Remark)
 													)
@@ -181,6 +219,7 @@ def add_asset(request):
                           AssetTypeModel = form.cleaned_data['AssetTypeModel'],
                           Group = form.cleaned_data['Group'],
                           TeamName = form.cleaned_data['TeamName'],
+                          Loc=form.cleaned_data['Loc'],
                           ProductLine = form.cleaned_data['ProductLine'],
                           Remark = form.cleaned_data['Remark']
 						  )
@@ -195,6 +234,7 @@ def WriteToExcel(request, weather_data, town=None):
     AssetTypeModel = request.session['AssetTypeModel']
     Group = request.session['Group']
     TeamName = request.session['TeamName']
+    Loc = request.session['Loc']
     ProductLine = request.session['ProductLine']
     Remark = request.session['Remark']
     all_data1 = Asset_details.objects.filter(Q(Owner__contains=Owner) &
@@ -202,6 +242,7 @@ def WriteToExcel(request, weather_data, town=None):
                                                   Q(Group__contains=Group) &
                                                   Q(TeamName__contains=TeamName) &
                                                   Q(AssetTypeModel__contains=AssetTypeModel) &
+                                                  Q(Loc__contains=Loc) &
                                                   Q(ProductLine__contains=ProductLine) &
                                                   Q(Remark__contains=Remark)
                                                   )
@@ -218,8 +259,9 @@ def WriteToExcel(request, weather_data, town=None):
     worksheet.write(row, col + 2, "AssetTypeModel")
     worksheet.write(row, col + 3, "Group")
     worksheet.write(row, col + 4, "TeamName")
-    worksheet.write(row, col + 5, "ProductLine")
-    worksheet.write(row, col + 6, "Remark")
+    worksheet.write(row, col + 5, "Loc")
+    worksheet.write(row, col + 6, "ProductLine")
+    worksheet.write(row, col + 7, "Remark")
 
     row = 1
 
@@ -230,8 +272,9 @@ def WriteToExcel(request, weather_data, town=None):
         worksheet.write(row, col + 2, data.AssetTypeModel)
         worksheet.write(row, col + 3, data.Group)
         worksheet.write(row, col + 4, data.TeamName)
-        worksheet.write(row, col + 5, data.ProductLine)
-        worksheet.write(row, col + 6, data.Remark)
+        worksheet.write(row, col + 5, data.Loc)
+        worksheet.write(row, col + 6, data.ProductLine)
+        worksheet.write(row, col + 7, data.Remark)
         row += 1
     workbook.close()
     xlsx_data = output.getvalue()
@@ -253,6 +296,7 @@ def export_pdf(request):
     AssetTypeModel = request.session['AssetTypeModel']
     Group = request.session['Group']
     TeamName = request.session['TeamName']
+    Loc = request.session['Loc']
     ProductLine = request.session['ProductLine']
     Remark = request.session['Remark']
     all_data =Asset_details.objects.filter(Q(Owner__contains=Owner) &
@@ -260,11 +304,12 @@ def export_pdf(request):
                                                  Q(Group__contains=Group) &
                                                  Q(TeamName__contains=TeamName) &
                                                  Q(AssetTypeModel__contains=AssetTypeModel) &
+                                                 Q(Loc__contains=Loc) &
                                                  Q(ProductLine__contains=ProductLine) &
                                                  Q(Remark__contains=Remark)
                                                  )
 
-    report_name = AssetNo + "_" + Owner + "_" + AssetTypeModel + "_" + Group + "_" + TeamName + "_" + ProductLine
+    report_name = AssetNo + "_" + Owner + "_" + AssetTypeModel + "_" + Group + "_" + TeamName + "_" + Loc + "_" + ProductLine
 
     data = {
         "report": report_name, "date": datetime.datetime.now(), "all": all_data,
@@ -329,7 +374,7 @@ def import_xls(request):
 
         if (data_valid == 0):
             for data in excel_data[1:]:
-                register =Asset_details(AssetNo=data[0],
+                register = Asset_details(AssetNo=data[0],
                                               Owner=data[1],
                                               AssetTypeModel=data[2],
                                               Group=data[3],
@@ -343,6 +388,7 @@ def import_xls(request):
             messages.success(request, ('import failed '))
 
         return render(request, 'accounts/import_excel.html', {"excel_data": excel_data})
+
 
 def feedback(request):
     return render(request, 'feedback.html')
@@ -399,5 +445,32 @@ def setup(request):
 def setup_display(request):
     setups =Setup_details.objects.all()
     return render(request, 'accounts/table1.html', {'setups':setups})
+
+def setup_book(request):
+    lists = Setup_details.objects.all()
+    return render(request, 'accounts/book_event.html', {'lists':lists})
+
+def delete_asset(request,id):
+    id=int(id)
+    all=Asset_details.objects.get(id=id)
+    all.delete()
+    return redirect("/")
+
+def edit_asset(request,id):
+    all=Asset_details.objects.get(id=id)
+    return render(request,'accounts/edit_asset.html',{'all':all})
+
+def delete_setup(request,id):
+    id=int(id)
+    setups=Setup_details.objects.get(id=id)
+    setups.delete()
+    return redirect("/")
+
+def edit_setup(request,id):
+    setups=Setup_details.objects.get(id=id)
+    return render(request,'accounts/edit_setup.html',{'setups':setups})
+
+
+
 
 

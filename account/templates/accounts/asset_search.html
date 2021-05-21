@@ -11,9 +11,14 @@
 {% block content %}
 
 
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-9 mx-auto">
+          <div class="card-body px-10 py-10">
 <div class="alert alert-primary text-center" role="alert">
 	
-  <h1>Bosch EBB Hardware Asset Tracking Tool</h1>
+  <h1>Search Asset</h1>
   </div>
 
   {% if submitted %}
@@ -83,6 +88,17 @@
         {% endfor %}
       </datalist>
     </div>
+         <div class="form-group row">
+    <!--img src="{% static 'authenticate/images/team1.jpeg' %}" width="50" height="50"/-->
+    <label for="Loc" class="col-sm-3 col-form-label" style="font-size:30px;">Location</label>
+      <input list="Loc" name="Loc" value="{{Loc}}" style="font-size:30px;" placeholder="Enter Location">
+      <datalist id="Loc">
+        {% for data1 in data %}
+        <option>{{data1.Loc}}</option>
+        {% endfor %}
+      </datalist>
+    </div>
+
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/p1.jpg' %}" width="50" height="50"/-->
     <label for="ProductLine" class="col-sm-3 col-form-label" style="font-size:30px;">Product line</label>

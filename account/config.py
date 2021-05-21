@@ -1,4 +1,4 @@
 from django.apps import AppConfig
 
-class accountAuth(AppConfig):
-    name='AccountAuth'
+class AuthConfig(AppConfig):
+    name = 'authcfg'

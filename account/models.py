@@ -22,6 +22,7 @@ class Asset_details(models.Model):
     AssetTypeModel = models.CharField(max_length=50)
     Group = models.CharField(max_length=50)
     TeamName = models.CharField(max_length=50)
+    Loc=models.CharField(max_length=50)
     ProductLine = models.CharField(max_length=50)
     Remark = models.CharField(max_length=400)
 
@@ -29,29 +30,53 @@ class Asset_details(models.Model):
     def __str__(self):
         return self.AssetNo
 
-class Lab_event(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)# The user name from main table to base table will be same
-    Title=models.CharField(max_length=200,unique=True)
-    Description=models.TextField()
-    Start_date=models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
-    End_date=models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
-    Start_time=models.TimeField(auto_now_add=False, auto_now=False, blank=True)
-    End_time=models.TimeField(auto_now_add=False, auto_now=False, blank=True)
-    created_date=models.DateTimeField(auto_now_add=True) # auto now add means fill with current date.
+#class Lab_event(models.Model):
+#    user=models.ForeignKey(User,on_delete=models.CASCADE)# The user name from main table to base table will be same
+#    Title=models.CharField(max_length=200,unique=True)
+#    Description=models.TextField()
+#    Start_date=models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
+#    End_date=models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
+#    Start_time=models.TimeField(auto_now_add=False, auto_now=False, blank=True)
+#    End_time=models.TimeField(auto_now_add=False, auto_now=False, blank=True)
+#    created_date=models.DateTimeField(auto_now_add=True) # auto now add means fill with current date.
+
+#    def __str__(self):
+#        return self.Title
+
+ #   def get_absolute_url(self):
+ #       return reverse('authentication:lab_event_details', args=(self.id,)) # This reverse a large variety
+    # of regular expression in URL patterns.
+
+#    @property
+#    def get_html_url(self):
+#        print("get_html_url")
+#        print(self.id)
+#        url = reverse('lab_event_details', args=(self.id,))
+ #       return f'<a href="{url}"> {self.Title} </a>'
+
+
+class Event(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, unique=True)
+    description = models.TextField()
+    start_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
+    end_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
+    start_time = models.TimeField(auto_now_add=False, auto_now=False, blank=True)
+    end_time = models.TimeField(auto_now_add=False, auto_now=False, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.Title
+        return self.title
 
-    def get_url(self):
-        return reverse('authentication:Lab-event',args=(self.id,)) # This reverse a large variety
-    # of regular expression in URL patterns.
+    def get_absolute_url(self):
+        return reverse('authentication:event-detail', args=(self.id,))
 
     @property
     def get_html_url(self):
         print("get_html_url")
         print(self.id)
-        url=reverse('Lab-event', args=(self.id,))
-        return f'<a href="{url}"> {self.Title} </a>'
+        url = reverse('event-detail', args=(self.id,))
+        return f'<a href="{url}"> {self.title} </a>'
 
 
 class Setup_details(models.Model):
@@ -65,7 +90,7 @@ class Setup_details(models.Model):
         return self.Host_name
 
 class EventMember(models.Model):
-    event=models.ForeignKey(Lab_event,on_delete=models.CASCADE)
+    event=models.ForeignKey(Event,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
 
     class Meta:

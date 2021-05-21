@@ -20,54 +20,59 @@
 
   {% csrf_token %}
 
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-9 mx-auto">
+          <div class="card-body px-10 py-10">
 
 <div class="form-group row ">
   <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Title</label>
   <div class="col-sm-9">
-  {{ form.Title }}
+  {{ form.title }}
   </div>
-  <span class="text-error">{{ form.Title.errors }}</span>
+  <span class="text-error">{{ form.title.errors }}</span>
 </div>
 
 <div class="form-group row ">
   <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Description</label>
   <div class="col-sm-9">
-  {{ form.Description }}
+  {{ form.description }}
   </div>
-  <span class="text-error">{{ form.Description.errors }}</span>
+  <span class="text-error">{{ form.description.errors }}</span>
 </div>
 
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Start_date</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">start_date</label>
   <div class="col-sm-9 ">
-  {{ form.Start_date }}
+  {{ form.start_date }}
   </div>
-  <span class="text-error">{{ form.Start_date.errors }}</span>
+  <span class="text-error">{{ form.start_date.errors }}</span>
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Start_time</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">start_time</label>
   <div class="col-sm-9"  >
-  {{ form.Start_time }}
+  {{ form.start_time }}
   </div>
-  <span class="text-error">{{ form.Start_time.errors }}</span>
+  <span class="text-error">{{ form.start_time.errors }}</span>
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">End_date</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">end_date</label>
   <div class="col-sm-9 ">
-  {{ form.End_date }}
+  {{ form.end_date }}
   </div>
-  <span class="text-error">{{ form.End_date.errors }}</span>
+  <span class="text-error">{{ form.end_date.errors }}</span>
 </div>
 
 <div class="form-group row ">
-  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">End_time</label>
+  <label for="exampleInputEmail2" class="col-sm-3 col-form-label">end_time</label>
   <div class="col-sm-9"  >
-  {{ form.End_time }}
+  {{ form.end_time }}
   </div>
-  <span class="text-error">{{ form.End_time.errors }}</span>
+  <span class="text-error">{{ form.end_time.errors }}</span>
 </div>
 
 <div class="text-right ">
