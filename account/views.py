@@ -45,14 +45,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 #model_to_dict(instance)
 import datetime
+from django.urls import reverse_lazy
 from .models import *
 from django.core.mail import send_mail
+from datetime import datetime
 
 
 class CalendarView(LoginRequiredMixin, generic.ListView):
     login_url = 'signup'
     model = Event
-    template_name = 'calendar.html'
+    template_name = 'accounts/calendar.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,17 +101,17 @@ def next_month(d):
 
        '''
 
-def calendar_test(request):
-    msg     = None
-    success = False
-    context =""
-    #context = super().get_context_data(**kwargs)
-    d = get_date(request.GET.get('month', None))
-    cal = Calendar(d.year, d.month)
-    #print(cal)
-    html_cal = cal.formatmonth(withyear=True)
-    context = mark_safe(html_cal)
-    return render(request, "accounts/calendar.html", { "context" : context, "success" : success })
+#def calendar_test(request):
+#    msg     = None
+#    success = False
+#    context =""
+#    #context = super().get_context_data(**kwargs)
+#    d = get_date(request.GET.get('month', None))
+#    cal = Calendar(d.year, d.month)
+#    #print(cal)
+#    html_cal = cal.formatmonth(withyear=True)
+#    context = mark_safe(html_cal)
+#    return render(request, "accounts/calendar.html", { "context" : context, "success" : success })
 
 
 def create_event(request):
@@ -137,7 +139,8 @@ def create_event(request):
         start_time = request.POST['start_time']
         end_time = request.POST['end_time']
         # calendar_test(request)
-        return render(request, "accounts/calendar.html", {})
+        #return render(request, "accounts/calendar.html", {})
+        return HttpResponseRedirect(reverse('calendar'))
     else:
         print("else part")
 
@@ -147,18 +150,48 @@ def create_event(request):
 class EventEdit(generic.UpdateView):
     model = Event
     fields = ['title', 'description', 'start_time', 'end_time']
-    template_name = 'event.html'
+    template_name = 'accounts/event.html'
 
 
 # @login_required(login_url='signup')
 def event_details(request, event_id):
-    event = Event.objects.all()
-    eventmember = EventMember.objects.all()
-    #context = {
-    #    'event': event,
-    #    'eventmember': eventmember
-    #}
-    return render(request, 'accounts/event_details.html',{'event':event,'eventmember':eventmember})
+    event = Event.objects.get(id=event_id)
+    eventmember = EventMember.objects.filter(event=event)
+    context = {
+        'event': event,
+        'eventmember': eventmember
+    }
+    return render(request, 'accounts/event_details.html',context)
+
+
+
+def add_eventmember(request, event_id):
+    forms = AddMemberForm()
+    if request.method == 'POST':
+        forms = AddMemberForm(request.POST)
+        if forms.is_valid():
+            member = EventMember.objects.filter(event=event_id)
+            event = Event.objects.get(id=event_id)
+            if member.count() <= 9:
+                user = forms.cleaned_data['user']
+                EventMember.objects.create(
+                    event=event,
+                    user=user
+                )
+                return redirect('calendar')
+            else:
+                print('--------------User limit exceed!-----------------')
+    context = {
+        'form': forms
+    }
+    return render(request, 'accounts/add_member.html', context)
+
+
+class EventMemberDeleteView(generic.DeleteView):
+    model = EventMember
+    template_name = 'accounts/event_delete.html'
+    success_url = reverse_lazy('calendar')
+
 
 
 def asset_search(request):
@@ -312,7 +345,7 @@ def export_pdf(request):
     report_name = AssetNo + "_" + Owner + "_" + AssetTypeModel + "_" + Group + "_" + TeamName + "_" + Loc + "_" + ProductLine
 
     data = {
-        "report": report_name, "date": datetime.datetime.now(), "all": all_data,
+        "report": report_name, "date":datetime.now(), "all": all_data,
     }
     pdf = render_to_pdf('accounts/pdf.html', data)
     response = HttpResponse(pdf, content_type='application/pdf')

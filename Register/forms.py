@@ -10,7 +10,6 @@ class UserDataForm(forms.ModelForm):
     team = forms.CharField(label="", max_length=50,widget=forms.TextInput(attrs={"class": "form-control", 'placeholder': 'Team'}))
     group = forms.CharField(label="", max_length=50,widget=forms.TextInput(attrs={"class": "form-control", 'placeholder': 'Group'}))
     phonenumber = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={"class": "form-control", 'placeholder': 'Phone Number'}))
-
     class Meta:
         model = UserData
         fields = ('location', 'team', 'group', 'phonenumber')
@@ -32,14 +31,13 @@ class LoginForm(forms.Form):
         ))
 
 class SignUpForm(UserCreationForm):
-
     username = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder" : "Username",
+                "placeholder": "Username",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
 
     name = forms.CharField(
         widget=forms.TextInput(
@@ -47,21 +45,21 @@ class SignUpForm(UserCreationForm):
                 "placeholder": "Full Name",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
-                "placeholder" : "Email",
+                "placeholder": "Email",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
     Location = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Location",
                 "class": "form-control",
             }
-        ))
+        ),required=True)
 
     Team_name = forms.CharField(
         widget=forms.TextInput(
@@ -69,32 +67,47 @@ class SignUpForm(UserCreationForm):
                 "placeholder": "Team Name",
                 "class": "form-control"
             }
-        ))
-    Group =forms.CharField(
+        ),required=True)
+    Group = forms.CharField(
         widget=forms.TextInput(
             attrs={
                 "placeholder": "Group",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
     password1 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "placeholder" : "Password",
+                "placeholder": "Password",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
     password2 = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "placeholder" : "Password check",
+                "placeholder": "Password check",
                 "class": "form-control"
             }
-        ))
+        ),required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username','name', 'email','Location','Team_name','Group','password1', 'password2')
+
+    def save(self,commit=True):
+        user=super(SignUpForm,self).save(commit=False)
+        user.name=self.cleaned_data['name']
+        user.email=self.cleaned_data['email']
+        user.Location=self.cleaned_data['Location']
+        user.Team_name=self.cleaned_data['Team_name']
+        user.Group=self.cleaned_data['Group']
+
+        if commit:
+            user.save()
+
+        return user
+
+
 
 class PasswordReset(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder" : "Email","class": "form-control"}))

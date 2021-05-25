@@ -14,7 +14,7 @@
 <div class="container-fluid page-body-wrapper full-page-wrapper">
     <div class="row w-100 m-0">
       <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
-          <div class="card col-lg-12 mx-auto">
+          <div class="card col-lg-11 mx-auto">
           <div class="card-body px-10 py-10">
 <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
 	<h1>Lab setup details</h1>
@@ -40,8 +40,8 @@
         </button>
        </div>
 
-<table class="table table-striped table-bordered table-sm">
-    <thead class="thead-dark">
+ <table class="table table-striped">
+    <thead>
       <tr>
           <th scope="col">Host Name</th>
           <th scope="col">FQDN</th>
@@ -52,8 +52,9 @@
       </tr>
     </thead>
 
-    <tbody>
-      {% for set in setups %}
+     {% for set in setups %}
+     <tbody>
+
     <tr>
          <td>{{set.Host_name}}</td>
             <td>{{set.FQDN}}</td>
@@ -61,15 +62,18 @@
             <td>{{set.COM_port_details}}</td>
             <td>{{set.Other_details}}</td>
              <td>
+                 <center>
                  <a href="/edit_setup/{{set.id}}" class="btn btn-success">Edit</a>
                  <a href="/delete_setup/{{set.id}}" class="btn btn-danger">delete</a>
+                 </center>
 
               </td>
-            <td></td>
+
     </tr>
-    {% endfor %}
+
 
 </tbody>
+        {% endfor %}
 
 </table>
 

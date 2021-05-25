@@ -74,15 +74,17 @@
         </div>
       </div>
 
-        <form action="displayUser" method="POST">
-         {% for user in users %}
-         <p>UserName : {{user.user}}</p>
-        <p>Name : {{user.name}}</p>
-         <p>Location : {{user.location}}</p>
-         <p>Team : {{user.team}}</p>
-         <p>Group : {{user.group}</p>
-         {% endfor %}
-       </form>
+    <div class="container">
+  <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
+    <h1>Profile</h1>
+  </div>
+  <p>UserName :{{user}}</p>
+  <p>Name : {{user.name}}</p>
+  <p>Location : {{user.Location}}</p>
+  <p>Team : {{user.Team_name}}</p>
+  <p>Group : {{user.Group}}</p>
+  </div>
+
 
           </div>
         </div>

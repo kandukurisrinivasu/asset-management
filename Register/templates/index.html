@@ -19,16 +19,18 @@
 {% block content %}
 
 
-<form action="displayUser" method="POST">
-         <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
-           <h1>Profile</h1>
-         </div>
-         <p>UserName :{{username}}</p>
-        <p>Name : {{name}}</p>
-         <p>Location : {{Location}}</p>
-         <p>Team : {{Team_name}}</p>
-         <p>Group : {{Group}}</p>
-       </form>
+<div class="container">
+  <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
+    <h1>Profile</h1>
+  </div>
+  <p><b>UserName</b></h6> :{{user}}</p>
+  <p><b>Name</b> : {{user.name}}</p>
+  <p><b>Email</b> : {{user.email}}</p>
+  <p><b>Location</b> : {{user.Location}}</p>
+  <p><b>Team</b> : {{user.Team_name}}</p>
+  <p><b>Group</b> : {{user.Group}}</p>
+  </div>
+
 
   <div class="content-wrapper">
     <div class="row">

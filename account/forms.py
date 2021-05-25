@@ -73,14 +73,14 @@ class EventForm(forms.ModelForm):
       'end_time': forms.DateInput(attrs={'type': 'time'}, format='%Y-%m-%dT%H:%M'),
     }
     exclude = ['user']
-'''
+
   def __init__(self, *args, **kwargs):
     super(EventForm, self).__init__(*args, **kwargs)
     """A test!"""
     print("Test.")
     # input_formats to parse HTML5 datetime-local input to datetime field
     self.fields['start_time'].input_formats = ('%H:%M',)
-    self.fields['end_time'].input_formats = ('%H:%M',)'''
+    self.fields['end_time'].input_formats = ('%H:%M',)
 
 
 class setupDetailsForm(forms.Form):
@@ -96,3 +96,8 @@ class EditProfileForm(UserChangeForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password',)
 
+class AddMemberForm(forms.ModelForm):
+
+    class Meta:
+        model=EventMember
+        fields = ['user']

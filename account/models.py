@@ -30,6 +30,16 @@ class Asset_details(models.Model):
     def __str__(self):
         return self.AssetNo
 
+    def get_absolute_url(self):
+        return reverse('asset_search_display', args=(self.id,))
+
+    @property
+    def get_html_url(self):
+        print("get_html_url")
+        print(self.id)
+        url = reverse('asset_search_display', args=(self.id,))
+        return f'<a href="{url}"> {self.AssetNo} </a>'
+
 #class Lab_event(models.Model):
 #    user=models.ForeignKey(User,on_delete=models.CASCADE)# The user name from main table to base table will be same
 #    Title=models.CharField(max_length=200,unique=True)
@@ -69,7 +79,7 @@ class Event(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('authentication:event-detail', args=(self.id,))
+        return reverse('event-detail', args=(self.id,))
 
     @property
     def get_html_url(self):

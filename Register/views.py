@@ -45,9 +45,9 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
+            #username = form.cleaned_data.get("username")
+            #raw_password = form.cleaned_data.get("password1")
+            #user = authenticate(username=username, password=raw_password)
 
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
@@ -128,13 +128,17 @@ def add_user(request):
 
     return render(request, "accounts/add_user.html", {"form": form, "msg": msg, "success": success})
 
-def displayUser(request):
-    form = SignUpForm(request.POST)
-    if form.is_valid():
-        username=form.cleaned_data['username']
-        name=form.cleaned_data['name']
-        Location=form.cleaned_data['Location']
-        Team_name=form.cleaned_data['Team_name']
-        Group=form.cleaned_data['Group']
-    context={'form':form,'username':username,'name':name,'Location':Location,'Team_name':Team_name,'Group':Group}
-    return render(request,'index.html',context)
+#def displayUser(request):
+#    form = SignUpForm(request.POST)
+#    if form.is_valid():
+#        username=form.cleaned_data['username']
+#        name=form.cleaned_data['name']
+#        Location=form.cleaned_data['Location']
+#        Team_name=form.cleaned_data['Team_name']
+#        Group=form.cleaned_data['Group']
+#    context={'form':form,'username':username,'name':name,'Location':Location,'Team_name':Team_name,'Group':Group}
+#    return render(request,'index.html',context)
+
+def profileDisplay(request):
+    args={'user': request.user}
+    return render(request, 'index.html',args)

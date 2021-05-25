@@ -1,9 +1,8 @@
+{% extends  "layouts/base.html" %}
 
-{% extends  "layouts/base_calendar.html" %}
-{% block title %} Blank Page {% endblock %} 
+{% block title %} Blank Page {% endblock %}
 
 <!-- Specific Plugin CSS goes HERE -->
-
 {% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
 
 <!-- Specific CSS goes HERE -->
@@ -11,27 +10,32 @@
 
 {% block content %}
 
+
 <div class="container-fluid page-body-wrapper full-page-wrapper">
     <div class="row w-100 m-0">
       <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
           <div class="card col-lg-9 mx-auto">
           <div class="card-body px-10 py-10">
 
-<div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
-      <h1><b>Event Details</b></h1>
-    </div>
-              <div class="clearfix">
 
-        <span class="left m-2" style="font-size: 20px;">Welcome,{{ request.user }}</span>
-      <a class="btn btn-info right mr-2" href="{% url 'calendar' %}?{{ next_month }} "> Next Month >> </a>
-    <a class="btn btn-info right mr-2" href="{% url 'calendar' %}?{{ prev_month }}"> << Previous Month </a>
-      <div style="color: blueviolet;">
-      {{ calendar }}
+               <h1>Delete</h1>
+              <form action="" method="post">
+                  {% csrf_token %}
+              <p>Are you sure you want to delete this event?</p>
+               <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+            </form>
+
           </div>
+          </div>
+      </div>
+    </div>
+</div>
 
-  </div>
 
-  
+
+
+
+
 {% endblock content %}
 
 <!-- Specific Plugin JS goes HERE  -->
