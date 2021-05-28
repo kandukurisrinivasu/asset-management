@@ -34,8 +34,8 @@
 
 
     <!--img src="{% static 'authenticate/images/asset.jpeg' %}" width="50" height="50"/-->
-    <label for="AssetNo" class="col-sm-3 col-form-label" style="font-size:30px;">Asset Number</label>
-    <input list="AssetNoID" name="AssetNo" value="{{AssetNo}}" style="font-size:30px;" placeholder="Enter AssetNo">
+    <label for="AssetNo" class="col-sm-2 col-form-label">Asset Number</label>
+    <input list="AssetNoID" name="AssetNo" value="{{AssetNo}}"  placeholder="Enter AssetNo">
       <datalist id="AssetNoID">
         {% for data1 in data %}
         <option>{{data1.AssetNo}}</option>
@@ -45,8 +45,8 @@
 
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/user.png' %}" width="50" height="50"/-->
-    <label for="Owner" class="col-sm-3 col-form-label" style="font-size:30px;">Asset Owner</label>
-      <input list="OwnerID" name="Owner" value="{{Owner}}" style="font-size:30px;" placeholder="Enter Owner">
+    <label for="Owner" class="col-sm-2 col-form-label">Asset Owner</label>
+      <input list="OwnerID" name="Owner" value="{{Owner}}"  placeholder="Enter Owner">
       <datalist id="OwnerID">
         {% for data1 in data %}
         <option>{{data1.Owner}}</option>
@@ -56,9 +56,9 @@
 
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/d1.jpg' %}" width="50" height="50"/-->
-    <label for="AssetTypeModel" class="col-sm-3 col-form-label" style="font-size:30px;">Asset Type/Model</label>
+    <label for="AssetTypeModel" class="col-sm-2 col-form-label">Asset Type/Model</label>
 
-      <input list="AssetTypeModelID" name="AssetTypeModel" value="{{AssetTypeModel}}"  style="font-size:30px;" placeholder="Enter AssetTypeModel">
+      <input list="AssetTypeModelID" name="AssetTypeModel" value="{{AssetTypeModel}}"   placeholder="Enter AssetTypeModel">
       <datalist id="AssetTypeModelID">
         {% for data1 in data %}
         <option>{{data1.AssetTypeModel}}</option>
@@ -69,8 +69,8 @@
     <div class="form-group row">
 
     <!--img src="{% static 'authenticate/images/g3.jpg' %}" width="50" height="50"/-->
-    <label for="Group" class="col-sm-3 col-form-label" style="font-size:30px;" >Group</label>
-      <input list="GroupID" name="Group" value="{{Group}}" style="font-size:30px;" placeholder="Enter Group">
+    <label for="Group"class="col-sm-2 col-form-label" >Group</label>
+      <input list="GroupID" name="Group" value="{{Group}}"  placeholder="Enter Group">
       <datalist id="GroupID">
         {% for data1 in data %}
         <option>{{data1.Group}}</option>
@@ -80,8 +80,8 @@
 
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/team1.jpeg' %}" width="50" height="50"/-->
-    <label for="TeamName" class="col-sm-3 col-form-label" style="font-size:30px;"> Team</label>
-      <input list="TeamNameID" name="TeamName" value="{{TeamName}}" style="font-size:30px;" placeholder="Enter TeamName">
+    <label for="TeamName" class="col-sm-2 col-form-label"> Team</label>
+      <input list="TeamNameID" name="TeamName" value="{{TeamName}}"  placeholder="Enter TeamName">
       <datalist id="TeamNameID">
         {% for data1 in data %}
         <option>{{data1.TeamName}}</option>
@@ -90,8 +90,8 @@
     </div>
          <div class="form-group row">
     <!--img src="{% static 'authenticate/images/team1.jpeg' %}" width="50" height="50"/-->
-    <label for="Loc" class="col-sm-3 col-form-label" style="font-size:30px;">Location</label>
-      <input list="Loc" name="Loc" value="{{Loc}}" style="font-size:30px;" placeholder="Enter Location">
+    <label for="Loc" class="col-sm-2 col-form-label">Location</label>
+      <input list="Loc" name="Loc" value="{{Loc}}" placeholder="Enter Location">
       <datalist id="Loc">
         {% for data1 in data %}
         <option>{{data1.Loc}}</option>
@@ -101,10 +101,10 @@
 
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/p1.jpg' %}" width="50" height="50"/-->
-    <label for="ProductLine" class="col-sm-3 col-form-label" style="font-size:30px;">Product line</label>
+    <label for="ProductLine" class="col-sm-2 col-form-label">Product line</label>
 
 
-      <input list="ProductLineID" name="ProductLine" value="{{Product_line}}" style="font-size:30px;" placeholder="Enter ProductLine">
+      <input list="ProductLineID" name="ProductLine" value="{{Product_line}}"  placeholder="Enter ProductLine">
       <datalist id="ProductLineID">
         {% for data1 in data %}
         <option>{{data1.ProductLine}}</option>
@@ -114,10 +114,10 @@
 
     <div class="form-group row">
     <!--img src="{% static 'authenticate/images/remark.jpeg' %}" width="50" height="50"/-->
-    <label for="Remark" class="col-sm-3 col-form-label" style="font-size:30px;">Remark</label>
+    <label for="Remark" class="col-sm-2 col-form-label">Remark</label>
 
 
-      <input list="RemarkID" name="Remark" value="{{Remark}}" style="font-size:30px;" placeholder="Enter Remark">
+      <input list="RemarkID" name="Remark" value="{{Remark}}"  placeholder="Enter Remark">
       <datalist id="RemarkID">
         {% for data1 in data %}
         <option>{{data1.Remark}}</option>

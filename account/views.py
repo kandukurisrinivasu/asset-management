@@ -1,14 +1,15 @@
+
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.http import HttpResponse
 from django import template
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin # This is for authentication
+from django.contrib.auth.mixins import LoginRequiredMixin  # This is for authentication
 from django.views import generic
-from django.utils.safestring import mark_safe #Explicitly mark a string as safe for (HTML) output
+from django.utils.safestring import mark_safe  # Explicitly mark a string as safe for (HTML) output
 # purposes. The returned object can be used everywhere a string or unicode object is appropriate
 from .utils import render_to_pdf, Calendar
 from django.db.models import Q
@@ -18,11 +19,9 @@ from .models import *
 import datetime
 from datetime import date
 from io import BytesIO
-import xlsxwriter ## This module is to wrinting files in the excel
-import openpyxl # Python library to read and write an excel file.
+import xlsxwriter  ## This module is to wrinting files in the excel
+import openpyxl  # Python library to read and write an excel file.
 import calendar
-
-
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -43,12 +42,14 @@ import xlsxwriter
 from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
-#model_to_dict(instance)
+# model_to_dict(instance)
 import datetime
 from django.urls import reverse_lazy
 from .models import *
 from django.core.mail import send_mail
 from datetime import datetime
+from datetime import date,timedelta
+from django.contrib.auth.models import User
 
 
 class CalendarView(LoginRequiredMixin, generic.ListView):
@@ -89,7 +90,6 @@ def next_month(d):
     return month
 
     '''
-
         context = super().get_context_data(**kwargs)
            d = get_date(self.request.GET.get('month', None))
            cal = Calendar(d.year, d.month)
@@ -98,10 +98,10 @@ def next_month(d):
            context['prev_month'] = prev_month(d)
            context['next_month'] = next_month(d)
            return context
-
        '''
 
-#def calendar_test(request):
+
+# def calendar_test(request):
 #    msg     = None
 #    success = False
 #    context =""
@@ -128,23 +128,42 @@ def create_event(request):
             start_time=request.POST['start_time'],
             end_time=request.POST['end_time']
         )
+        event.start_time = datetime.now()
+        event.end_time = event.start_time + timedelta(hours=1)
         event.save()
-        messages.success(request, ('New Record Added Successfully...'))
+        start_conflict =Event.objects.filter(
+            start_time__range=(event.start_time,
+                               event.end_time))
+        end_conflict = Event.objects.filter(
+            end_time__range=(event.start_time,
+                             event.end_time))
 
-        print("test create event ifififififififififi \n\n\n\n")
-        title = request.POST['title']
-        description = request.POST['description']
-        start_date = request.POST['start_date']
-        end_date = request.POST['end_date']
-        start_time = request.POST['start_time']
-        end_time = request.POST['end_time']
-        # calendar_test(request)
-        #return render(request, "accounts/calendar.html", {})
-        return HttpResponseRedirect(reverse('calendar'))
+        during_conflict = Event.objects.filter(
+            start_date__lte=event.start_time,
+            end_date__gte=event.end_time)
+
+        if (start_conflict or end_conflict or during_conflict):
+            messages.info(request,'No slot available for this time')
+            return HttpResponseRedirect(reverse('calendar'))
+        else:
+            messages.success(request, ('New Record Added Successfully...'))
+
+            print("test create event ifififififififififi \n\n\n\n")
+            title = request.POST['title']
+            description = request.POST['description']
+            start_date = request.POST['start_date']
+            end_date = request.POST['end_date']
+            start_time = request.POST['start_time']
+            end_time = request.POST['end_time']
+            # calendar_test(request)
+            # return render(request, "accounts/calendar.html", {})
+
+            return HttpResponseRedirect(reverse('calendar'))
     else:
         print("else part")
 
-    return render(request, 'accounts/event.html', {'form': form})
+    args = Setup_details.objects.all()
+    return render(request, 'accounts/event.html', {'form': form,'args':args})
 
 
 class EventEdit(generic.UpdateView):
@@ -161,8 +180,7 @@ def event_details(request, event_id):
         'event': event,
         'eventmember': eventmember
     }
-    return render(request, 'accounts/event_details.html',context)
-
+    return render(request, 'accounts/event_details.html', context)
 
 
 def add_eventmember(request, event_id):
@@ -193,15 +211,14 @@ class EventMemberDeleteView(generic.DeleteView):
     success_url = reverse_lazy('calendar')
 
 
-
 def asset_search(request):
-    submitted=False
-    if request.method=='POST':
+    submitted = False
+    if request.method == 'POST':
         print("home")
         if request.POST.get("export"):
             print("export")
 
-        values={}
+        values = {}
         AssetNo = request.POST['AssetNo']
         Owner = request.POST['Owner']
         AssetTypeModel = request.POST['AssetTypeModel']
@@ -220,45 +237,46 @@ def asset_search(request):
         request.session['ProductLine'] = request.POST['ProductLine']
         request.session['Remark'] = request.POST['Remark']
 
-        all_records=Asset_details.objects.filter(Q(Owner__contains=Owner) &
-		                                             Q(AssetNo__contains=AssetNo) &
-													 Q(Group__contains=Group) &
-													 Q(TeamName__contains=TeamName) &
-													 Q(AssetTypeModel__contains=AssetTypeModel) &
-                                                     Q(Loc__contains=Loc) &
-													 Q(ProductLine__contains=ProductLine)&
-													 Q(Remark__contains=Remark)
-													)
-        values={'name':asset_search_display,'all':all_records}
-        return render(request,'accounts/asset_search_display.html',values)
+        all_records = Asset_details.objects.filter(Q(Owner__contains=Owner) &
+                                                   Q(AssetNo__contains=AssetNo) &
+                                                   Q(Group__contains=Group) &
+                                                   Q(TeamName__contains=TeamName) &
+                                                   Q(AssetTypeModel__contains=AssetTypeModel) &
+                                                   Q(Loc__contains=Loc) &
+                                                   Q(ProductLine__contains=ProductLine) &
+                                                   Q(Remark__contains=Remark)
+                                                   )
+        values = {'name': asset_search_display, 'all': all_records}
+        return render(request, 'accounts/asset_search_display.html', values)
     else:
-        data=Asset_details.objects.all()
-        form=AssetDetailsForm()
+        data = Asset_details.objects.all()
+        form = AssetDetailsForm()
         if 'submitted' in request.GET:
-            submitted=True
-    return render(request,'accounts/asset_search.html',{'form':form,'submitted':submitted,'data':data})
+            submitted = True
+    return render(request, 'accounts/asset_search.html', {'form': form, 'submitted': submitted, 'data': data})
+
 
 def asset_search_display(request):
     all = Asset_details.objects.all()
-    return render(request,'accounts/asset_search_display.html',{'all':all})
+    return render(request, 'accounts/asset_search_display.html', {'all': all})
 
 
 def add_asset(request):
-    values={'form':AssetDetailsForm}
-    form=AssetDetailsForm(request.POST)
+    values = {'form': AssetDetailsForm}
+    form = AssetDetailsForm(request.POST)
     if form.is_valid():
-        register=Asset_details(AssetNo = form.cleaned_data['AssetNo'],
-                          Owner = form.cleaned_data['Owner'],
-                          AssetTypeModel = form.cleaned_data['AssetTypeModel'],
-                          Group = form.cleaned_data['Group'],
-                          TeamName = form.cleaned_data['TeamName'],
-                          Loc=form.cleaned_data['Loc'],
-                          ProductLine = form.cleaned_data['ProductLine'],
-                          Remark = form.cleaned_data['Remark']
-						  )
+        register = Asset_details(AssetNo=form.cleaned_data['AssetNo'],
+                                 Owner=form.cleaned_data['Owner'],
+                                 AssetTypeModel=form.cleaned_data['AssetTypeModel'],
+                                 Group=form.cleaned_data['Group'],
+                                 TeamName=form.cleaned_data['TeamName'],
+                                 Loc=form.cleaned_data['Loc'],
+                                 ProductLine=form.cleaned_data['ProductLine'],
+                                 Remark=form.cleaned_data['Remark']
+                                 )
         register.save()
         messages.success(request, 'New record added sucessfully.....')
-    return render(request,'accounts/add_asset.html',values)
+    return render(request, 'accounts/add_asset.html', values)
 
 
 def WriteToExcel(request, weather_data, town=None):
@@ -271,14 +289,14 @@ def WriteToExcel(request, weather_data, town=None):
     ProductLine = request.session['ProductLine']
     Remark = request.session['Remark']
     all_data1 = Asset_details.objects.filter(Q(Owner__contains=Owner) &
-                                                  Q(AssetNo__contains=AssetNo) &
-                                                  Q(Group__contains=Group) &
-                                                  Q(TeamName__contains=TeamName) &
-                                                  Q(AssetTypeModel__contains=AssetTypeModel) &
-                                                  Q(Loc__contains=Loc) &
-                                                  Q(ProductLine__contains=ProductLine) &
-                                                  Q(Remark__contains=Remark)
-                                                  )
+                                             Q(AssetNo__contains=AssetNo) &
+                                             Q(Group__contains=Group) &
+                                             Q(TeamName__contains=TeamName) &
+                                             Q(AssetTypeModel__contains=AssetTypeModel) &
+                                             Q(Loc__contains=Loc) &
+                                             Q(ProductLine__contains=ProductLine) &
+                                             Q(Remark__contains=Remark)
+                                             )
     output = BytesIO()
     workbook = xlsxwriter.Workbook(output)
 
@@ -314,11 +332,12 @@ def WriteToExcel(request, weather_data, town=None):
     # xlsx_data contains the Excel file
     return xlsx_data
 
+
 def export_xls(request):
     print("welocme to export xls_files")
     response = HttpResponse(content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
-    xlsx_data = WriteToExcel(request,"weather_period", "town")
+    xlsx_data = WriteToExcel(request, "weather_period", "town")
     response.write(xlsx_data)
     return response
 
@@ -332,20 +351,20 @@ def export_pdf(request):
     Loc = request.session['Loc']
     ProductLine = request.session['ProductLine']
     Remark = request.session['Remark']
-    all_data =Asset_details.objects.filter(Q(Owner__contains=Owner) &
-                                                 Q(AssetNo__contains=AssetNo) &
-                                                 Q(Group__contains=Group) &
-                                                 Q(TeamName__contains=TeamName) &
-                                                 Q(AssetTypeModel__contains=AssetTypeModel) &
-                                                 Q(Loc__contains=Loc) &
-                                                 Q(ProductLine__contains=ProductLine) &
-                                                 Q(Remark__contains=Remark)
-                                                 )
+    all_data = Asset_details.objects.filter(Q(Owner__contains=Owner) &
+                                            Q(AssetNo__contains=AssetNo) &
+                                            Q(Group__contains=Group) &
+                                            Q(TeamName__contains=TeamName) &
+                                            Q(AssetTypeModel__contains=AssetTypeModel) &
+                                            Q(Loc__contains=Loc) &
+                                            Q(ProductLine__contains=ProductLine) &
+                                            Q(Remark__contains=Remark)
+                                            )
 
     report_name = AssetNo + "_" + Owner + "_" + AssetTypeModel + "_" + Group + "_" + TeamName + "_" + Loc + "_" + ProductLine
 
     data = {
-        "report": report_name, "date":datetime.now(), "all": all_data,
+        "report": report_name, "date": datetime.now(), "all": all_data,
     }
     pdf = render_to_pdf('accounts/pdf.html', data)
     response = HttpResponse(pdf, content_type='application/pdf')
@@ -397,24 +416,24 @@ def import_xls(request):
         if ("ProductLine" != data[5]):
             messages.success(request, ('ProductLine not macthed with data base field'))
             data_valid = all_data1 = Asset_details.objects.filter(Q(Owner__contains=Owner) &
-                                                                       Q(AssetNo__contains=AssetNo) &
-                                                                       Q(Group__contains=Group) &
-                                                                       Q(TeamName__contains=TeamName) &
-                                                                       Q(AssetTypeModel__contains=AssetTypeModel) &
-                                                                       Q(ProductLine__contains=ProductLine) &
-                                                                       Q(Remark__contains=Remark)
-                                                                       )
+                                                                  Q(AssetNo__contains=AssetNo) &
+                                                                  Q(Group__contains=Group) &
+                                                                  Q(TeamName__contains=TeamName) &
+                                                                  Q(AssetTypeModel__contains=AssetTypeModel) &
+                                                                  Q(ProductLine__contains=ProductLine) &
+                                                                  Q(Remark__contains=Remark)
+                                                                  )
 
         if (data_valid == 0):
             for data in excel_data[1:]:
                 register = Asset_details(AssetNo=data[0],
-                                              Owner=data[1],
-                                              AssetTypeModel=data[2],
-                                              Group=data[3],
-                                              TeamName=data[4],
-                                              ProductLine=data[5],
-                                              Remark=data[6]
-                                              )
+                                         Owner=data[1],
+                                         AssetTypeModel=data[2],
+                                         Group=data[3],
+                                         TeamName=data[4],
+                                         ProductLine=data[5],
+                                         Remark=data[6]
+                                         )
                 register.save()
         else:
             excel_data = []
@@ -426,13 +445,18 @@ def import_xls(request):
 def feedback(request):
     return render(request, 'feedback.html')
 
+
 def table(request):
-    assets=Asset_details.objects.all()
-    return render(request,'accounts/table.html',{'assets':assets})
+    assets = Asset_details.objects.all()
+    return render(request, 'accounts/table.html', {'assets': assets})
+
+
 
 @login_required(login_url="/login/")
 def index(request):
-    return render(request, "index.html")
+    user=request.user
+    args = Asset_details.objects.filter(Owner=user.username)
+    return render(request, 'index.html', {'args': args})
 
 
 
@@ -459,10 +483,11 @@ def pages(request):
 
 
 def settings(request):
-    return render(request,'includes/settings.html')
+    return render(request, 'includes/settings.html')
+
 
 def setup(request):
-    values = {"form":setupDetailsForm}
+    values = {"form": setupDetailsForm}
     form = setupDetailsForm(request.POST)
     if form.is_valid():
         register = Setup_details(Host_name=form.cleaned_data['Host_name'],
@@ -475,35 +500,39 @@ def setup(request):
     messages.success(request, 'Setup details added succesfully.....')
     return render(request, 'accounts/setup.html', values)
 
+
 def setup_display(request):
-    setups =Setup_details.objects.all()
-    return render(request, 'accounts/table1.html', {'setups':setups})
+    setups = Setup_details.objects.all()
+    return render(request, 'accounts/table1.html', {'setups': setups})
+
 
 def setup_book(request):
     lists = Setup_details.objects.all()
-    return render(request, 'accounts/book_event.html', {'lists':lists})
+    return render(request, 'accounts/book_event.html', {'lists': lists})
 
-def delete_asset(request,id):
-    id=int(id)
-    all=Asset_details.objects.get(id=id)
+
+def delete_asset(request, id):
+    id = int(id)
+    all = Asset_details.objects.get(id=id)
     all.delete()
-    return redirect("/")
+    return HttpResponseRedirect(reverse('asset_search_display'))
 
-def edit_asset(request,id):
-    all=Asset_details.objects.get(id=id)
-    return render(request,'accounts/edit_asset.html',{'all':all})
 
-def delete_setup(request,id):
-    id=int(id)
-    setups=Setup_details.objects.get(id=id)
+def edit_asset(request, id):
+    all = Asset_details.objects.get(id=id)
+    return render(request, 'accounts/edit_asset.html', {'all': all})
+
+
+def delete_setup(request, id):
+    id = int(id)
+    setups = Setup_details.objects.get(id=id)
     setups.delete()
     return redirect("/")
 
-def edit_setup(request,id):
-    setups=Setup_details.objects.get(id=id)
-    return render(request,'accounts/edit_setup.html',{'setups':setups})
 
-
+def edit_setup(request, id):
+    setups = Setup_details.objects.get(id=id)
+    return render(request, 'accounts/edit_setup.html', {'setups': setups})
 
 
 

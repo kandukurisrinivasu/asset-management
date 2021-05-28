@@ -139,6 +139,4 @@ def add_user(request):
 #    context={'form':form,'username':username,'name':name,'Location':Location,'Team_name':Team_name,'Group':Group}
 #    return render(request,'index.html',context)
 
-def profileDisplay(request):
-    args={'user': request.user}
-    return render(request, 'index.html',args)
+
