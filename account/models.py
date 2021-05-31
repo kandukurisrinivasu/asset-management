@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 from datetime import datetime
 
 # Create your models here.
@@ -78,6 +79,17 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+    def check_overlap(self, fixed_start, fixed_end, new_start, new_end):
+        overlap = False
+        if new_start == fixed_end or new_end == fixed_start:    #edge case
+            overlap = False
+        elif (new_start >= fixed_start and new_start <= fixed_end) or (new_end >= fixed_start and new_end <= fixed_end): #innner limits
+            overlap = True
+        elif new_start <= fixed_start and new_end >= fixed_end: #outter limits
+            overlap = True
+
+        return overlap
+
     def get_absolute_url(self):
         return reverse('event-detail', args=(self.id,))
 
@@ -87,6 +99,19 @@ class Event(models.Model):
         print(self.id)
         url = reverse('event-detail', args=(self.id,))
         return f'<a href="{url}"> {self.title} </a>'
+
+    def clean(self):
+        if  self.end_time <= self.start_time:
+            raise ValidationError('Ending times must after starting times')
+
+        events = Event.objects.filter(start_date=self.start_date)
+        if events.exists():
+            for event in events:
+                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
+                    raise ValidationError(
+                        'Sorry this time slot is already booked with this time: ' + str(event.start_date) + ', ' + str(
+                            event.start_time) + '-' + str(event.end_time))
+
 
 
 class Setup_details(models.Model):

@@ -128,37 +128,20 @@ def create_event(request):
             start_time=request.POST['start_time'],
             end_time=request.POST['end_time']
         )
-        event.start_time = datetime.now()
-        event.end_time = event.start_time + timedelta(hours=1)
         event.save()
-        start_conflict =Event.objects.filter(
-            start_time__range=(event.start_time,
-                               event.end_time))
-        end_conflict = Event.objects.filter(
-            end_time__range=(event.start_time,
-                             event.end_time))
+        messages.success(request, ('New Record Added Successfully...'))
 
-        during_conflict = Event.objects.filter(
-            start_date__lte=event.start_time,
-            end_date__gte=event.end_time)
+        print("test create event ifififififififififi \n\n\n\n")
+        title = request.POST['title']
+        description = request.POST['description']
+        start_date = request.POST['start_date']
+        end_date = request.POST['end_date']
+        start_time = request.POST['start_time']
+        end_time = request.POST['end_time']
+        # calendar_test(request)
+        # return render(request, "accounts/calendar.html", {})
 
-        if (start_conflict or end_conflict or during_conflict):
-            messages.info(request,'No slot available for this time')
-            return HttpResponseRedirect(reverse('calendar'))
-        else:
-            messages.success(request, ('New Record Added Successfully...'))
-
-            print("test create event ifififififififififi \n\n\n\n")
-            title = request.POST['title']
-            description = request.POST['description']
-            start_date = request.POST['start_date']
-            end_date = request.POST['end_date']
-            start_time = request.POST['start_time']
-            end_time = request.POST['end_time']
-            # calendar_test(request)
-            # return render(request, "accounts/calendar.html", {})
-
-            return HttpResponseRedirect(reverse('calendar'))
+        return HttpResponseRedirect(reverse('calendar'))
     else:
         print("else part")
 
@@ -523,12 +506,16 @@ def edit_asset(request, id):
     return render(request, 'accounts/edit_asset.html', {'all': all})
 
 
-def delete_setup(request, id):
-    id = int(id)
+def delete_setup(request,id):
+    id=int(id)
     setups = Setup_details.objects.get(id=id)
     setups.delete()
-    return redirect("/")
+    return HttpResponseRedirect(reverse('setuptable'))
 
+class EventMemberDeleteView(generic.DeleteView):
+    model = EventMember
+    template_name = 'accounts/event_delete.html'
+    success_url = reverse_lazy('calendar')
 
 def edit_setup(request, id):
     setups = Setup_details.objects.get(id=id)
