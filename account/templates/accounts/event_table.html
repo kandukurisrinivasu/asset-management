@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+{% load static %} <!-- New line -->
+{% block title %} Search Asset {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-15 mx-auto">
+          <div class="card-body px-20 py-20">
+<div class="text-middle">
+
+  <div class="alert alert-primary text-center" role="alert">
+    <h1>Events Details</h1>
+    </div>
+<div class="clearfix">
+            <a class="btn btn-primary left" href="{% url 'calendar' %}"> Calendar </a>
+</div>
+
+    <form action="" method="POST">
+      {% csrf_token %}
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">SL NO</th>
+          <th scope="col">Title</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Date</th>
+            <th scope="col">End Time</th>
+          <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+      </thead>
+
+      {% for event in events %}
+        <tbody>
+          <tr>
+              <td>{{ forloop.counter }}</td>
+            <td>{{event.title}}</td>
+            <td>{{event.start_date}}</td>
+            <td>{{event.start_time}}</td>
+            <td>{{event.end_date}}</td>
+            <td>{{event.end_time}}</td>
+              <td>
+                  {% if event.status == 'active' %}
+                  <a class="text-success">{{ event.status}}</a>
+                  {% elif event.status == 'completed' %}
+                  <a  class="text-primary">{{ event.status }}</a>
+                  {% else %}
+                  <a  class="text-danger">{{ event.status }}</a>
+                  {% endif %}
+              </td>
+              <td>
+                  <a class="btn btn-danger" href="{% url 'event-delete' event.pk %}">Delete</a>
+              </td>
+
+              </tr>
+      </tbody>
+  {% endfor %}
+
+      </table>
+
+  </form>
+</div>
+          </div>
+          </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+

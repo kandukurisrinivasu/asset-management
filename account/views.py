@@ -8,6 +8,14 @@ from django import template
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
+from django.views.generic import (
+    ListView,
+    CreateView,
+    UpdateView,
+    DetailView,
+    DeleteView,
+    View,
+)
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin  # This is for authentication
@@ -129,7 +137,8 @@ def create_event(request):
             start_date=request.POST['start_date'],
             end_date=request.POST['end_date'],
             start_time=request.POST['start_time'],
-            end_time=request.POST['end_time']
+            end_time=request.POST['end_time'],
+            status=request.POST['status']
         )
         event.save()
         messages.success(request, ('New Record Added Successfully...'))
@@ -141,6 +150,7 @@ def create_event(request):
         end_date = request.POST['end_date']
         start_time = request.POST['start_time']
         end_time = request.POST['end_time']
+        status=request.POST['status']
         # calendar_test(request)
         # return render(request, "accounts/calendar.html", {})
 
@@ -154,7 +164,7 @@ def create_event(request):
 
 class EventEdit(generic.UpdateView):
     model = Event
-    fields = ['title', 'description', 'start_time', 'end_time']
+    fields = ['title', 'description', 'start_time', 'end_time','status']
     template_name = 'accounts/event.html'
 
 
@@ -167,6 +177,17 @@ def event_details(request, event_id):
         'eventmember': eventmember
     }
     return render(request, 'accounts/event_details.html', context)
+
+
+class EventDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
+    model = Event
+    template_name = 'accounts/delete_event.html'
+    success_url = reverse_lazy('event-table')
+
+def event_table(request):
+    events=Event.objects.all()
+    return render(request,'accounts/event_table.html',{'events':events})
 
 
 def add_eventmember(request, event_id):
@@ -543,6 +564,5 @@ def edit_setup(request, id):
         return HttpResponseRedirect(reverse("setuptable"))
     context["form"] = form
     return render(request, 'accounts/edit_setup.html', context)
-
 
 

@@ -75,6 +75,15 @@ class Event(models.Model):
     start_time = models.TimeField(auto_now_add=False, auto_now=False, blank=True)
     end_time = models.TimeField(auto_now_add=False, auto_now=False, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    status_choice = (
+        ('disabled', 'Disabled'),
+        ('active', 'Active'),
+        ('deleted', 'Deleted'),
+        ('time out', 'Time Out'),
+        ('completed', 'Completed'),
+        ('cancel', 'Cancel'),
+    )
+    status = models.CharField(choices=status_choice, max_length=10)
 
     def __str__(self):
         return self.title
