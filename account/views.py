@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.http import HttpResponse
 from django import template
+from django.shortcuts import (get_object_or_404,
+                              render,
+                              HttpResponseRedirect)
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin  # This is for authentication
@@ -501,9 +504,19 @@ def delete_asset(request, id):
     return HttpResponseRedirect(reverse('asset_search_display'))
 
 
+#def edit_asset(request, id):
+#    all = Asset_details.objects.get(id=id)
+#    return render(request, 'accounts/edit_asset.html', {'all': all})
+
 def edit_asset(request, id):
-    all = Asset_details.objects.get(id=id)
-    return render(request, 'accounts/edit_asset.html', {'all': all})
+    context={}
+    obj=get_object_or_404(Asset_details,id=id)
+    form=AssetDetailsForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse("asset_search_display"))
+    context["form"] = form
+    return render(request, 'accounts/edit_asset.html', context)
 
 
 def delete_setup(request,id):
@@ -517,9 +530,19 @@ class EventMemberDeleteView(generic.DeleteView):
     template_name = 'accounts/event_delete.html'
     success_url = reverse_lazy('calendar')
 
+#def edit_setup(request, id):
+#    setups = Setup_details.objects.get(id=id)
+#    return render(request, 'accounts/edit_setup.html', {'setups': setups})
+
 def edit_setup(request, id):
-    setups = Setup_details.objects.get(id=id)
-    return render(request, 'accounts/edit_setup.html', {'setups': setups})
+    context = {}
+    obj=get_object_or_404(Setup_details,id=id)
+    form=setupDetailsForm(request.POST or None, instance = obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse("setuptable"))
+    context["form"] = form
+    return render(request, 'accounts/edit_setup.html', context)
 
 
 

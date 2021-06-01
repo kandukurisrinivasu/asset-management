@@ -16,57 +16,34 @@
       <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
           <div class="card col-lg-9 mx-auto">
           <div class="card-body px-10 py-10">
+
 <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
 	<h1>Edit Setup</h1>
 	</div>
 
 
-{% if submitted %}
-   <p class="success">
-     Your message was submitted successfully. Thank you.
-   </p>
+<div class="main">
+	<!-- Create a Form -->
+	<form method="POST">
+		<!-- Security token by Django -->
+		{% csrf_token %}
 
- {% else %}
+		<!-- form as paragraph -->
+		{{ form.as_p }}
 
- <form action="/edit_setup/{{setups.id}}" method="POST">
-       <input type="hidden" name="id" id="id" required maxlength="20" value="{{setups.id}}"/>
-    {% csrf_token %}
-	<div class="form-group row">
-	<label for="HostName" class="col-sm-2 col-form-label">Host name</label>
-		<input type="text" name="Host Name" value="{{setups.Host_name}}"/>
-   </div>
+        <center></pre>
+        <div class="text-right">
+		<input type="submit" value="Update">
+        </div>
+            </pre></center>
+	</form>
 
-  <div class="form-group row">
-	<label for="FQDNNo" class="col-sm-2 col-form-label">FQDN No</label>
-		<input type="number" name="FQDN" value="{{setups.FQDN}}"/>
-  </div>
-
-  <div class="form-group row">
-	<label for="OS" class="col-sm-2 col-form-label">Operating system</label>
-		<input type="text" name="FQDN" value="{{setups.OS}}"/>
-  </div>
-
-  <div class="form-group row">
-	<label for="COM Port" class="col-sm-2 col-form-label">COM PORT</label>
-		<input type="number" name="COM PORT" value="{{setups.COM_port_details}}"/>
-  </div>
-     <div class="form-group row">
-	<label for="Other Details" class="col-sm-2 col-form-label">Other details</label>
-		<input type="text" name="Other Details" value="{{setups.Other_details}}"/>
-  </div>
-
-
-
-<center></pre>
-<div class="text-right">
-<input type="submit" value=ADD>
-  </div>
-</pre></center>
-
-</form>
-
-{% endif %}
-
+</div>
+          </div>
+          </div>
+      </div>
+    </div>
+</div>
 
 
 

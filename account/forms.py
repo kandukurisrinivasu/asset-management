@@ -50,7 +50,20 @@ class UserProfileForm(forms.ModelForm):
         model=UserProfile
         fields=('user_name','Group','Team_name','Location','Phone')
 
-class AssetDetailsForm(forms.Form):
+#class AssetDetailsForm(forms.Form):
+#    AssetNo          = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Number'}))
+#    Owner            = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Owner'}))
+#    AssetTypeModel   = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Type/Model'}))
+#    Group            = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Group'}))
+#    TeamName         = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Team'}))
+#    Loc              = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Location'}))
+#    ProductLine      = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Product line'}))
+#    Remark           = forms.CharField(label="", max_length=400, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Remark'}))
+
+
+
+
+class AssetDetailsForm(forms.ModelForm):
     AssetNo          = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Number'}))
     Owner            = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Owner'}))
     AssetTypeModel   = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Type/Model'}))
@@ -59,6 +72,20 @@ class AssetDetailsForm(forms.Form):
     Loc              = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Location'}))
     ProductLine      = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Product line'}))
     Remark           = forms.CharField(label="", max_length=400, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Remark'}))
+
+    class Meta:
+        model=Asset_details
+        fields=[
+            "AssetNo",
+            "Owner",
+            "AssetTypeModel",
+            "Group",
+            "TeamName",
+            "Loc",
+            "ProductLine",
+            "Remark",
+        ]
+
 
 
 class EventForm(forms.ModelForm):
@@ -83,12 +110,32 @@ class EventForm(forms.ModelForm):
     self.fields['end_time'].input_formats = ('%H:%M',)
 
 
-class setupDetailsForm(forms.Form):
+#class setupDetailsForm(forms.Form):
+#    Host_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Host name'}))
+#    FQDN = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'FQDN'}))
+#    OS = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'OS'}))
+#    COM_port_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Com Port details'}))
+#    Other_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Other details'}))
+
+
+class setupDetailsForm(forms.ModelForm):
     Host_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Host name'}))
     FQDN = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'FQDN'}))
     OS = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'OS'}))
     COM_port_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Com Port details'}))
     Other_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Other details'}))
+
+    class Meta:
+        model=Setup_details
+        fields=[
+            "Host_name",
+            "FQDN",
+            "OS",
+            "COM_port_details",
+            "Other_details",
+        ]
+
+
 
 class EditProfileForm(UserChangeForm):
     password = forms.CharField(label="",  widget=forms.TextInput(attrs={'type':'hidden'}))

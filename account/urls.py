@@ -33,8 +33,8 @@ urlpatterns = [
     path('settings/',views.settings,name='settings'),
     path('delete_asset/<int:id>',views.delete_asset),
     path('edit_asset/<int:id>', views.edit_asset,name='edit_asset'),
-    path('delete_setup/<int:id>', views.delete_setup),
-    path('edit_setup/<int:id>', views.edit_setup),
+    path('delete_setup/<id>', views.delete_setup),
+    path('edit_setup/<id>', views.edit_setup),
     # Matches any html file
     path('', views.index, name='home'),
     re_path(r'^.*\.*', views.pages, name='pages'),

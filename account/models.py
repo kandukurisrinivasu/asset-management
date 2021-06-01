@@ -116,7 +116,7 @@ class Event(models.Model):
 
 class Setup_details(models.Model):
     Host_name=models.CharField(max_length=30)
-    FQDN=models.CharField(max_length=20,default='si-z0z15.st.de.bosch.com')
+    FQDN=models.CharField(max_length=50,default='si-z0z15.st.de.bosch.com')
     OS=models.CharField(max_length=20)
     COM_port_details=models.CharField(max_length=50)
     Other_details=models.TextField()
