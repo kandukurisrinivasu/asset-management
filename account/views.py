@@ -133,6 +133,7 @@ def create_event(request):
         event = Event(
             user=request.user,
             title=request.POST['title'],
+            lab_name=request.POST['lab_name'],
             description=request.POST['description'],
             start_date=request.POST['start_date'],
             end_date=request.POST['end_date'],
@@ -145,6 +146,7 @@ def create_event(request):
 
         print("test create event ifififififififififi \n\n\n\n")
         title = request.POST['title']
+        lab_name=request.POST['lab_name']
         description = request.POST['description']
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
@@ -448,11 +450,6 @@ def import_xls(request):
 
         return render(request, 'accounts/import_excel.html', {"excel_data": excel_data})
 
-
-def feedback(request):
-    return render(request, 'feedback.html')
-
-
 def table(request):
     assets = Asset_details.objects.all()
     return render(request, 'accounts/table.html', {'assets': assets})
@@ -498,6 +495,7 @@ def setup(request):
     form = setupDetailsForm(request.POST)
     if form.is_valid():
         register = Setup_details(Host_name=form.cleaned_data['Host_name'],
+                                 lab_name=form.cleaned_data['lab_name'],
                                  FQDN=form.cleaned_data['FQDN'],
                                  OS=form.cleaned_data['OS'],
                                  COM_port_details=form.cleaned_data['COM_port_details'],
@@ -565,4 +563,18 @@ def edit_setup(request, id):
     context["form"] = form
     return render(request, 'accounts/edit_setup.html', context)
 
+
+def feedback(request):
+    values = {"form":FeedbackForm}
+    form = FeedbackForm(request.POST)
+    if form.is_valid():
+        feed=Feedback(AssetNo=form.cleaned_data['AssetNo'],
+                      Name=form.cleaned_data['Name'],
+                      email=form.cleaned_data['email'],
+                      message=form.cleaned_data['message'],)
+        feed.save()
+        #return HttpResponse('<h1>Thanks for your feedback <h1>'
+                               # '<a class="nav-link" href="/"><b>Back to Home</b></a>')
+        return render(request,'feedback_thanks.html')
+    return render(request, 'feedback.html', values)
 

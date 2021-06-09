@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile,Asset_details,Event,Setup_details,EventMember
+from .models import UserProfile,Asset_details,Event,Setup_details,EventMember,Feedback
 from django.contrib.auth.models import User
 from django.core import validators
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
@@ -92,7 +92,7 @@ class EventForm(forms.ModelForm):
   class Meta:
     model = Event
     # datetime-local is a HTML5 input type, format to make date time show on fields
-    fields = ('title','description','start_date','end_date','start_time','end_time','status')
+    fields = ('title','lab_name','description','start_date','end_date','start_time','end_time','status')
     widgets = {
       'start_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%dT%H:%M'),
       'end_date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%dT%H:%M'),
@@ -120,6 +120,7 @@ class EventForm(forms.ModelForm):
 
 class setupDetailsForm(forms.ModelForm):
     Host_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Host name'}))
+    lab_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Lab name'}))
     FQDN = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'FQDN'}))
     OS = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'OS'}))
     COM_port_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Com Port details'}))
@@ -129,6 +130,7 @@ class setupDetailsForm(forms.ModelForm):
         model=Setup_details
         fields=[
             "Host_name",
+            "lab_name",
             "FQDN",
             "OS",
             "COM_port_details",
@@ -148,3 +150,24 @@ class AddMemberForm(forms.ModelForm):
     class Meta:
         model=EventMember
         fields = ['user']
+
+class FeedbackForm(forms.ModelForm):
+    AssetNo = forms.CharField( max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Number'}))
+    Name= forms.CharField( max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Name'}))
+    email=forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "ex1.ex2@in.bosch.com",
+                "class": 'col-sm col-form-label'
+            }
+        ), required=True)
+    message=forms.TextInput()
+    class Meta:
+        model=Feedback
+        fields = [
+            "AssetNo",
+            "Name",
+            "email",
+            "message",
+        ]
+

@@ -69,6 +69,7 @@ class Asset_details(models.Model):
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, unique=True)
+    lab_name=models.CharField(max_length=200)
     description = models.TextField()
     start_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
     end_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
@@ -125,6 +126,7 @@ class Event(models.Model):
 
 class Setup_details(models.Model):
     Host_name=models.CharField(max_length=30)
+    lab_name = models.CharField(max_length=30)
     FQDN=models.CharField(max_length=50,default='si-z0z15.st.de.bosch.com')
     OS=models.CharField(max_length=20)
     COM_port_details=models.CharField(max_length=50)
@@ -142,3 +144,12 @@ class EventMember(models.Model):
 
         def __str__(self):
             return str(self.user)
+
+
+class Feedback(models.Model):
+    AssetNo = models.CharField(max_length=50)
+    Name = models.CharField(max_length=50)
+    email=models.EmailField(max_length=25)
+    message =models.TextField()
+    def __str__(self):
+        return self.AssetNo

@@ -14,7 +14,7 @@ urlpatterns = [
 
     path("asset_search/", views.asset_search, name="asset_search"),
     path("asset_search_display/", views.asset_search_display, name="asset_search_display"),
-    path('add', views.add_asset, name="add_asset"),
+    path('add/', views.add_asset, name="add_asset"),
     path('setup', views.setup, name="setup"),
     path('export', views.export_xls, name='export'),
     path('export_pdf', views.export_pdf, name='export_pdf'),

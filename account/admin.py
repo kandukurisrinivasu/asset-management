@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile,Asset_details,Event,Setup_details,EventMember
+from .models import UserProfile,Asset_details,Event,Setup_details,EventMember,Feedback
 
 #from import_export.admin import ImportExportModelAdmin
 
@@ -15,7 +15,6 @@ class EventMemberAdmin(admin.ModelAdmin):
     display=['event','user']
 admin.site.register(Event)
 admin.site.register(Setup_details)
-
-
 admin.site.register(EventMember,EventMemberAdmin)
+admin.site.register(Feedback)
 

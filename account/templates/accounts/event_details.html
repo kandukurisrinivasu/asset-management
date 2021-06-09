@@ -32,9 +32,13 @@
 
         <div class="clearfix">
             <h3>Event Name: {{ event.title }}</h3>
+            <br>
+            <h4>LAB Name : {{event.lab_name}} </h4>
+            <br>
             <p>Date : From <span style="color: gray;">{{ event.start_date }}</span> To <span style="color: gray;">{{ event.end_date }}</span></p>
             <p>Time : From <span style="color: gray;">{{ event.start_time }}</span> To <span style="color: gray;">{{ event.end_time }}</span></p>
-            <p>Status :<span style="color: gray;">{{ event.status }}</span></p>
+            <hr>
+            <p>Status :  <span style="color: gray;">{{ event.status }}</span></p>
             <hr>
             <p>{{ event.description }}</p>
         </div>

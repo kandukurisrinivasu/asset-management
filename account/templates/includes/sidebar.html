@@ -54,6 +54,9 @@
             </a>
           </li>
 
+
+
+
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic-user" aria-expanded="false" aria-controls="ui-basic-user">
               <span class="menu-icon">
@@ -64,8 +67,9 @@
             </a>
             <div class="collapse" id="ui-basic-user">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'adduser' %}">Add New User</a></li>
+                 <li class="nav-item"> <a class="nav-link" href="{% url 'register' %}">Add User</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{% url 'edituser' %}">Edit User</a></li>
+                <!--li class="nav-item"> <a class="nav-link" href="/ui-typography.html">Delete User</a></li-->
               </ul>
             </div>
           </li>
@@ -86,6 +90,9 @@
             </div>
           </li>
 
+
+
+
           <li class="nav-item menu-items">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic-asset" aria-expanded="false" aria-controls="ui-basic-asset">
               <span class="menu-icon">
@@ -96,7 +103,6 @@
             </a>
             <div class="collapse" id="ui-basic-asset">
               <ul class="nav flex-column sub-menu">
-
                 <li class="nav-item"> <a class="nav-link" href="{% url 'add_asset' %}">Add Asset</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{% url 'import_xls' %}">import Asset</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{% url 'asset_search' %}">Search Asset</a></li>
@@ -171,7 +177,7 @@
             </div>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link" 
+            <a class="nav-link"
                target="_blank" rel="noreferrer noopener"
                href="https://connect.bosch.com/communities/service/html/communitystart?communityUuid=2326591c-9502-4eb1-a1af-18864ce525be">
               <span class="menu-icon">
@@ -181,12 +187,10 @@
             </a>
           </li>
 
-           <li class="nav-item menu-items">
-            <a class="nav-link"
-               target="_blank" rel="noreferrer noopener"
-               href="{% url 'feedback' %}">
+          <li class="nav-item menu-items">
+            <a class="nav-link"  href="{% url 'feedback' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
+                <i class="mdi  mdi-file-document-box"></i>
               </span>
               <span class="menu-title">Feedback Page</span>
             </a>

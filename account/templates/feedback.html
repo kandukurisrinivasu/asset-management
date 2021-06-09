@@ -10,24 +10,59 @@
 
 {% block content %}
 
-
     <meta charset="UTF-8">
     <title>Bosch EBB Feedback Page</title>
 
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-9 mx-auto">
+          <div class="card-body px-10 py-10">
+                 <a class="nav-link" href="/"><b>Home</b></a>
+              <br>
+              <div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
+     <h1>Feedback page</h1>
+     </div>
 
- <pre><centre>
-     <h1><b>Welcome to the feedback page</b></h1>
-     <li><a class="navbar-link" href="{% url 'add_asset' %}"><b>Back</b></a>
+              <div class="main">
+	<!-- Create a Form -->
+	<form method="POST">
+		<!-- Security token by Django -->
+		{% csrf_token %}
+        <div class="form-group row">
+	    <label for="AssetNo" class="col-sm-2 col-form-label">Asset No</label>
+		{{form.AssetNo}}
+        </div>
 
- </centre></pre>
+         <div class="form-group row">
+	    <label for="Name" class="col-sm-2 col-form-label">Name</label>
+		{{form.Name}}
+        </div>
+
+         <div class="form-group row">
+	    <label for="AssetNo" class="col-sm-2 col-form-label">Email</label>
+		{{form.email}}
+        </div>
+
+        <div class="form-group row">
+	    <label for="AssetNo" class="col-sm-2 col-form-label">Your comments</label>
+		{{form.message}}
+        </div>
+
+        <center></pre>
+        <div class="text-right">
+		<input type="submit">
+        </div>
+            </pre></center>
+	</form>
 
 
-
-
-
-
-
-
+</div>
+          </div>
+          </div>
+      </div>
+    </div>
+</div>
 
 {% endblock content %}
 

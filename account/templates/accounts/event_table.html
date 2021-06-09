@@ -12,10 +12,10 @@
 
 
 <div class="container-fluid page-body-wrapper full-page-wrapper">
-    <div class="row w-100 m-0">
+    <div class="row w-102 m-0">
       <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
-          <div class="card col-lg-15 mx-auto">
-          <div class="card-body px-20 py-20">
+          <div class="card col-lg-17 mx-auto">
+          <div class="card-body px-22 py-22">
 <div class="text-middle">
 
   <div class="alert alert-primary text-center" role="alert">
@@ -32,6 +32,7 @@
         <tr>
           <th scope="col">SL NO</th>
           <th scope="col">Title</th>
+           <th scope="col">Lab Name</th>
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">End Date</th>
@@ -46,6 +47,7 @@
           <tr>
               <td>{{ forloop.counter }}</td>
             <td>{{event.title}}</td>
+              <td>{{event.lab_name}}</td>
             <td>{{event.start_date}}</td>
             <td>{{event.start_time}}</td>
             <td>{{event.end_date}}</td>

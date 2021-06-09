@@ -1,1 +1,1 @@
-web :gunicorn BoschEBBAsset.wsgi
+web: gunicorn core.wsgi --log-file=- 
