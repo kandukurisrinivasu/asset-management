@@ -29,10 +29,7 @@
 	<form method="POST">
 		<!-- Security token by Django -->
 		{% csrf_token %}
-        <div class="form-group row">
-	    <label for="AssetNo" class="col-sm-2 col-form-label">Asset No</label>
-		{{form.AssetNo}}
-        </div>
+
 
          <div class="form-group row">
 	    <label for="Name" class="col-sm-2 col-form-label">Name</label>
@@ -40,12 +37,12 @@
         </div>
 
          <div class="form-group row">
-	    <label for="AssetNo" class="col-sm-2 col-form-label">Email</label>
+	    <label for="Email" class="col-sm-2 col-form-label">Email</label>
 		{{form.email}}
         </div>
 
         <div class="form-group row">
-	    <label for="AssetNo" class="col-sm-2 col-form-label">Your comments</label>
+	    <label for="Message" class="col-sm-2 col-form-label">Your comments</label>
 		{{form.message}}
         </div>
 

@@ -133,7 +133,7 @@ def create_event(request):
         event = Event(
             user=request.user,
             title=request.POST['title'],
-            lab_name=request.POST['lab_name'],
+            lab_name=Setup_details.objects.get(id=request.POST['lab_name']),
             description=request.POST['description'],
             start_date=request.POST['start_date'],
             end_date=request.POST['end_date'],
@@ -494,8 +494,8 @@ def setup(request):
     values = {"form": setupDetailsForm}
     form = setupDetailsForm(request.POST)
     if form.is_valid():
-        register = Setup_details(Host_name=form.cleaned_data['Host_name'],
-                                 lab_name=form.cleaned_data['lab_name'],
+        register = Setup_details(lab_name=form.cleaned_data['lab_name'],
+                                 Host_name=form.cleaned_data['Host_name'],
                                  FQDN=form.cleaned_data['FQDN'],
                                  OS=form.cleaned_data['OS'],
                                  COM_port_details=form.cleaned_data['COM_port_details'],
@@ -568,8 +568,7 @@ def feedback(request):
     values = {"form":FeedbackForm}
     form = FeedbackForm(request.POST)
     if form.is_valid():
-        feed=Feedback(AssetNo=form.cleaned_data['AssetNo'],
-                      Name=form.cleaned_data['Name'],
+        feed=Feedback(Name=form.cleaned_data['Name'],
                       email=form.cleaned_data['email'],
                       message=form.cleaned_data['message'],)
         feed.save()
@@ -578,3 +577,83 @@ def feedback(request):
         return render(request,'feedback_thanks.html')
     return render(request, 'feedback.html', values)
 
+
+def WriteToExcelset(request, weather_data, town=None):
+    lab_name = request.session['lab_name']
+    Host_name = request.session['Host_name']
+    FQDN = request.session['FQDN']
+    OS = request.session['OS']
+    COM_port_details = request.session['COM_port_details']
+    Other_details = request.session['Other_details']
+    all_data1 =Setup_details.objects.filter(Q(lab_name__contains=lab_name) &
+                                            Q(Host_name__contains=Host_name) &
+                                            Q(FQDN__contains=FQDN) &
+                                            Q(OS__contains=OS) &
+                                            Q(COM_port_details__contains=COM_port_details) &
+                                            Q(Other_details__contains=Other_details)
+
+                                             )
+    output = BytesIO()
+    workbook = xlsxwriter.Workbook(output)
+
+    # Here we will adding the code to add data
+    worksheet = workbook.add_worksheet()
+    # Start from the first cell. Rows and columns are zero indexed.
+    row = 0
+    col = 0
+    worksheet.write(row, col, "lab_name")
+    worksheet.write(row, col + 1, "Host_name")
+    worksheet.write(row, col + 2, "FQDN")
+    worksheet.write(row, col + 3, "OS")
+    worksheet.write(row, col + 4, "COM_port_details")
+    worksheet.write(row, col + 5, "Other_details")
+    row = 1
+
+    for data in all_data1:
+        # print(data.AssetNo)
+        worksheet.write(row, col, data.lab_name)
+        worksheet.write(row, col + 1, data.Host_name)
+        worksheet.write(row, col + 2, data.FQDN)
+        worksheet.write(row, col + 3, data.OS)
+        worksheet.write(row, col + 4, data.COM_port_details)
+        worksheet.write(row, col + 5, data.Other_details)
+        row += 1
+    workbook.close()
+    xlsx_data = output.getvalue()
+    # xlsx_data contains the Excel file
+    return xlsx_data
+
+
+def export_xlsset(request):
+    print("welocme to export xls_files")
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
+    xlsx_data = WriteToExcelset(request, "weather_period", "town")
+    response.write(xlsx_data)
+    return response
+
+def export_pdfset(request):
+    lab_name = request.session['lab_name']
+    Host_name = request.session['Host_name']
+    FQDN = request.session['FQDN']
+    OS = request.session['OS']
+    COM_port_details = request.session['COM_port_details']
+    Other_details = request.session['Other_details']
+    all_data = Setup_details.objects.filter(Q(lab_name__contains=lab_name) &
+                                            Q(Host_name__contains=Host_name) &
+                                            Q(FQDN__contains=FQDN) &
+                                            Q(OS__contains=OS) &
+                                            Q(COM_port_details__contains=COM_port_details) &
+                                            Q(Other_details__contains=Other_details)
+
+                                            )
+
+    report_name =  lab_name+ "_" + Host_name + "_" + FQDN + "_" + OS + "_" + COM_port_details + "_" + Other_details
+
+    data = {
+        "report": report_name, "date": datetime.now(), "all": all_data,
+    }
+    pdf = render_to_pdf('accounts/pdf1.html', data)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=Report.pdf'
+    return response

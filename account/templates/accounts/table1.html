@@ -23,13 +23,13 @@
  <div class="text-right">
 
         <button>
-          <a id ="Export" href="{% url 'export' %}">Export </a>
+          <a id ="Export" href="{% url 'export_set' %}">Export Excel </a>
         </button>
        </div>
 
        <div class="text-right">
         <button>
-          <a id ="ExportPDF" href="{% url 'export_pdf' %}">Export PDF</a>
+          <a id ="ExportPDF" href="{% url 'export_pdf_set' %}">Export PDF</a>
         </button>
        </div>
 
@@ -43,8 +43,8 @@
  <table class="table table-striped">
     <thead>
       <tr>
+          <th scope="col">LAB Name</th>
           <th scope="col">Host Name</th>
-          <th scope="col">Lab Name</th>
           <th scope="col">FQDN</th>
           <th scope="col">OS</th>
           <th scope="col">COM PORT </th>
@@ -58,8 +58,8 @@
      <tbody>
 
     <tr>
+         <td>{{set.lab_name}}</td>
          <td>{{set.Host_name}}</td>
-        <td>{{set.lab_name}}</td>
             <td>{{set.FQDN}}</td>
             <td>{{set.OS}}</td>
             <td>{{set.COM_port_details}}</td>

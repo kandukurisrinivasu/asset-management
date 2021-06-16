@@ -66,10 +66,23 @@ class Asset_details(models.Model):
  #       return f'<a href="{url}"> {self.Title} </a>'
 
 
+
+class Setup_details(models.Model):
+    lab_name = models.CharField(max_length=30)
+    Host_name=models.CharField(max_length=30)
+    FQDN=models.CharField(max_length=50,default='si-z0z15.st.de.bosch.com')
+    OS=models.CharField(max_length=20)
+    COM_port_details=models.CharField(max_length=50)
+    Other_details=models.TextField()
+
+    def __str__(self):
+        return self.lab_name
+
+
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, unique=True)
-    lab_name=models.CharField(max_length=200)
+    lab_name=models.ForeignKey(Setup_details,on_delete=models.CASCADE)
     description = models.TextField()
     start_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
     end_date = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True)
@@ -108,7 +121,11 @@ class Event(models.Model):
         print("get_html_url")
         print(self.id)
         url = reverse('event-detail', args=(self.id,))
-        return f'<a href="{url}"> {self.title} </a>'
+        return f' Booked : {self.lab_name} <br><br>'\
+               f' Start time : {self.start_time} <br><br>'\
+               f'End time : {self.end_time} <br><br>'\
+               f'End date :{self.end_date} <br><br>' \
+               f'<a href="{url}"> Details </a> <br><br>'
 
     def clean(self):
         if  self.end_time <= self.start_time:
@@ -124,17 +141,6 @@ class Event(models.Model):
 
 
 
-class Setup_details(models.Model):
-    Host_name=models.CharField(max_length=30)
-    lab_name = models.CharField(max_length=30)
-    FQDN=models.CharField(max_length=50,default='si-z0z15.st.de.bosch.com')
-    OS=models.CharField(max_length=20)
-    COM_port_details=models.CharField(max_length=50)
-    Other_details=models.TextField()
-
-    def __str__(self):
-        return self.Host_name
-
 class EventMember(models.Model):
     event=models.ForeignKey(Event,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -147,9 +153,8 @@ class EventMember(models.Model):
 
 
 class Feedback(models.Model):
-    AssetNo = models.CharField(max_length=50)
     Name = models.CharField(max_length=50)
     email=models.EmailField(max_length=25)
     message =models.TextField()
     def __str__(self):
-        return self.AssetNo
+        return self.Name

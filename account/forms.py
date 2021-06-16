@@ -119,8 +119,8 @@ class EventForm(forms.ModelForm):
 
 
 class setupDetailsForm(forms.ModelForm):
-    Host_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Host name'}))
     lab_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Lab name'}))
+    Host_name = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Host name'}))
     FQDN = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'FQDN'}))
     OS = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'OS'}))
     COM_port_details = forms.CharField(label="", max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Com Port details'}))
@@ -129,8 +129,8 @@ class setupDetailsForm(forms.ModelForm):
     class Meta:
         model=Setup_details
         fields=[
-            "Host_name",
             "lab_name",
+            "Host_name",
             "FQDN",
             "OS",
             "COM_port_details",
@@ -152,7 +152,6 @@ class AddMemberForm(forms.ModelForm):
         fields = ['user']
 
 class FeedbackForm(forms.ModelForm):
-    AssetNo = forms.CharField( max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Asset Number'}))
     Name= forms.CharField( max_length=50, widget=forms.TextInput(attrs={'class':'col-sm col-form-label', 'placeholder':'Name'}))
     email=forms.EmailField(
         widget=forms.EmailInput(
@@ -165,7 +164,6 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model=Feedback
         fields = [
-            "AssetNo",
             "Name",
             "email",
             "message",
