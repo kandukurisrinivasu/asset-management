@@ -1,0 +1,80 @@
+{% extends  "layouts/base.html"  %}
+{% block title %} Blank Page {% endblock %} 
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+<script src="/admin/jsi18n/"></script>
+<script src="/static/admin/js/calendar.js"></script>
+<script src="/static/admin/js/jquery.init.js"></script>
+<script src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+<script src="/static/admin/js/core.js"></script>
+{% endblock stylesheets %}
+
+{% block content %}
+<form method="post" class="post-form" action="">
+
+  {% csrf_token %}
+
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-9 mx-auto">
+          <div class="card-body px-10 py-10">
+<div class="container">
+        <div class="clearfix">
+            <a class="btn btn-primary left" href="{% url 'calendar' %}"> Calendar </a>
+            <a class="btn btn-info right mr-2" href="{% url 'event_edit' event.pk %}"> Edit Event </a>
+        </div>
+
+        <div class="clearfix">
+            <h3>Event Name: {{ event.title }}</h3>
+            <br>
+            <h4>LAB Name : {{event.lab_name}} </h4>
+            <br>
+            <p>Date : From <span style="color: gray;">{{ event.start_date }}</span> To <span style="color: gray;">{{ event.end_date }}</span></p>
+            <p>Time : From <span style="color: gray;">{{ event.start_time }}</span> To <span style="color: gray;">{{ event.end_time }}</span></p>
+            <hr>
+            <p>Status :  <span style="color: gray;">{{ event.status }}</span></p>
+            <hr>
+            <p>{{ event.description }}</p>
+        </div>
+        <hr>
+        <div class="clearfix">
+            <h4 class="left" > Members of this Event</h4>
+            <a class="btn btn-success right" href="{% url 'add_eventmember' event.id %}"> Add Member </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                  <th style="width: 10px">SL NO</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for member in eventmember %}
+                <tr role="row">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ member.user.username }}</td>
+                    <td>{{ member.user.email }}</td>
+                     <td>
+                        <a class="btn btn-danger" href="{% url 'remove_event' member.id %}">Remove</a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+    </div>
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

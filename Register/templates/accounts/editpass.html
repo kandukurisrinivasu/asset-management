@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Edit  Asset User {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+ <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg-s1">
+        <div class="card col-lg-6 mx-auto">
+          <div class="card-body px-5 py-5">
+            <h3 class="card-title text-left mb-3">
+              <h3>Edit Password </h3>
+            </h3>
+
+               <span class="mb-0 text-muted">
+              {% if msg %}
+                  {{ msg | safe }}
+              {% else %}
+
+              {% endif %}
+            </span>
+
+            <div class="d-flex">
+              <br />
+            </div>
+
+              <!-- Hide the form on success -->
+            {% if not success %}
+              <form method="post" class="post-form" action="">
+
+                {% csrf_token %}
+
+
+
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group row ">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Password</label>
+                              <div class="col-sm-9">
+                              {{ form.password1 }}
+                              </div>
+                              <span class="text-error">{{form.password1.errors }}</span>
+                            </div>
+
+                               <div class="form-group row ">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Confirm Password</label>
+                              <div class="col-sm-9">
+                              {{ form.password2 }}
+                              </div>
+                              <span class="text-error">{{form.password2.errors }}</span>
+                            </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button class="btn btn-dark">Cancel</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                  <a href='/' class="btn btn-link">Back To Home</a>
+
+              </form>
+            {% endif %}
+
+
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- row ends -->
+  </div>
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

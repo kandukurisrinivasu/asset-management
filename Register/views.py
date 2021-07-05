@@ -1,74 +1,142 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User,auth # for user authentication
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
+from .forms import LoginForm,SignUpForm #PasswordReset,EditProfileForm
 from django.core.mail import send_mail
-
+from .forms import UserDataForm
+from .models import UserData
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
+from .forms import PasswordChangingForm
+from django.db.models import Q
 
 # Create your views here.
-def login(request):
-    if request.method=='POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user=auth.authenticate(username,password)
+def login_view(request):
+    form = LoginForm(request.POST or None)
 
-        if user is not None:
-            auth.login(request,user)
-            return redirect('/')
-        else:
-            messages.info(request,"invalid credential!")
-            return redirect("login")
+    msg = None
 
-    else:
-        return render(request, 'login.html')
+    if request.method == "POST":
 
-
-
-def register(request):
-    if request.method== 'POST':
-        first_name=request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        mobile = request.POST['mobile']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        if password1==password2:
-            if User.objects.filter(username=username).exists():
-                messages.info(request,'username already exists!')
-                return redirect('register')
-            elif User.objects.filter(email=email).exists():
-                messages.info(request,'email already exists!')
-                return redirect('register')
-
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
             else:
-                user = User.objects.create_user(username=username, password=password1, email=email, first_name=first_name,
-                                            last_name=last_name, mobile=mobile)
-                htmly = get_template('Email.html')
-                d = {'username': username}
-                subject, from_email, to = 'hello', 'from@example.com', 'to@emaple.com'
-                html_content = htmly.render(d)
-                msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
-                msg.attach_alternative(html_content, "text/html")
-                try:
-                    msg.send()
-                except:
-                    print("error in sending mail")
-                user.save()
-                messages.success(request, f'Your account has been created! You are now able to log in')
-                return redirect('login') ## if user is successfully created redirect login page.
+                msg = 'Invalid credentials'
         else:
-            messages.info(request, 'password not matching!')
-            return redirect('register')
+            msg = 'Error validating the form'
+
+    return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
 
+def register_user(request):
+    msg = None
+    success = False
 
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #username = form.cleaned_data.get("username")
+            #raw_password = form.cleaned_data.get("password1")
+            #user = authenticate(username=username, password=raw_password)
+
+            msg = 'User created - please <a href="/login">login</a>.'
+            success = True
+
+            # return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'
     else:
-        return render(request,'register.html')
+        form = SignUpForm()
+
+    return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
+
+
+
+def edituser(request):
+    msg = None
+    success = False
+
+    UserProfile1 = UserData.objects.all()
+
+    User1 = User.objects.all()
+    user_data = {}
+
+    for data in User1:
+        user_data['username'] = data.username
+        user_data['email'] = data.email
+
+    print(user_data)
+
+    return render(request, "accounts/edituser_main.html", {"user": User1, "UserProfile": UserProfile1,"msg":msg, "success" : success})
+
+
+def update(request, username):
+    msg = None
+    success = False
+    User2 = User.objects.get(username=username)
+    form =SignUpForm(instance=User2)
+
+    return render(request, "accounts/edituser.html", {"form": form, "msg": msg, "success": success})
+
+
+
+
 
 
 def logout(request):
     auth.logout(request)
-    return redirect('/')
+    msg = 'You are successfully logout -login back <a href="/login">login</a>.'
+    return render(request,'accounts/logout.html',{"msg":msg})
+
+
+class PasswordChangeView(PasswordChangeView):
+    form_class=PasswordChangingForm
+    success_url=reverse_lazy('/')
+
+def add_user(request):
+    msg = None
+    success = False
+
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+
+            msg = 'User created - please <a href="/login">login</a>.'
+            success = True
+
+            # return redirect("/login/")
+
+        else:
+            msg = 'Form is not valid'
+    else:
+        form = SignUpForm()
+
+    return render(request, "accounts/add_user.html", {"form": form, "msg": msg, "success": success})
+
+#def displayUser(request):
+#    form = SignUpForm(request.POST)
+#    if form.is_valid():
+#        username=form.cleaned_data['username']
+#        name=form.cleaned_data['name']
+#        Location=form.cleaned_data['Location']
+#        Team_name=form.cleaned_data['Team_name']
+#        Group=form.cleaned_data['Group']
+#    context={'form':form,'username':username,'name':name,'Location':Location,'Team_name':Team_name,'Group':Group}
+#    return render(request,'index.html',context)
+
+

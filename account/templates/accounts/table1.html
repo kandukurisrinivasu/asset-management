@@ -1,0 +1,96 @@
+{% extends  "layouts/base.html"  %}
+{% load static %} <!-- New line -->
+{% block title %} Add Asset {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-11 mx-auto">
+          <div class="card-body px-10 py-10">
+<div class="alert alert-primary text-center" role="alert" xmlns="http://www.w3.org/1999/html">
+	<h1>Lab setup details</h1>
+	</div>
+
+ <div class="text-right">
+
+        <button>
+          <a id ="Export" href="{% url 'export_set' %}">Export Excel </a>
+        </button>
+       </div>
+
+       <div class="text-right">
+        <button>
+          <a id ="ExportPDF" href="{% url 'export_pdf_set' %}">Export PDF</a>
+        </button>
+       </div>
+
+       <div class="text-right">
+
+        <button>
+          <a id ="Back" href="{% url 'home' %}">Back</a>
+        </button>
+       </div>
+
+ <table class="table table-striped">
+    <thead>
+      <tr>
+          <th scope="col">LAB Name</th>
+          <th scope="col">Host Name</th>
+          <th scope="col">FQDN</th>
+          <th scope="col">OS</th>
+          <th scope="col">COM PORT </th>
+          <th scope="col">Other Details</th>
+          <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+
+     {% for set in setups %}
+     <tbody>
+
+    <tr>
+         <td>{{set.lab_name}}</td>
+         <td>{{set.Host_name}}</td>
+            <td>{{set.FQDN}}</td>
+            <td>{{set.OS}}</td>
+            <td>{{set.COM_port_details}}</td>
+            <td>{{set.Other_details}}</td>
+             <td>
+                 <center>
+                 <a href="/edit_setup/{{set.id}}" class="btn btn-success">Edit</a>
+                 <a href="/delete_setup/{{set.id}}" class="btn btn-danger">delete</a>
+                 </center>
+
+              </td>
+
+    </tr>
+
+
+</tbody>
+        {% endfor %}
+
+</table>
+
+
+
+
+
+
+
+{% endblock content %}
+
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

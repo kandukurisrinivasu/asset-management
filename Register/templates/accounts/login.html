@@ -1,0 +1,76 @@
+{% extends "layouts/base_main.html" %}
+
+{% block title %} Login Page {% endblock %}
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+ <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="row w-100 m-0">
+        <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+          <div class="card col-lg-4 mx-auto">
+            <div class="card-body px-5 py-5">
+              <h3 class="card-title text-left mb-3">
+                <h3 href="">Bosch EBB Hardware Tracking Tool </h3>
+              </h3>
+
+                <span class="mb-0 text-muted">
+                {% if msg %}
+                    {{ msg | safe }}
+                {% else %}
+
+                {% endif %}
+              </span>
+
+                <div class="d-flex">
+                <br />
+              </div>
+                <form role="form" method="post" action="">
+                    {% csrf_token %}
+
+                <div class="form-group">
+                  <label>UserName</label>
+                  {{ form.username }}
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  {{ form.password }}
+                </div>
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" checked=""> Remember me </label>
+                  </div>
+                    </div>
+                    <div class="text-center">
+                  <button type="submit" name="login" class="btn btn-primary btn-block enter-btn">Login</button>
+                </div>
+                <div class="d-flex">
+                  <br />
+                </div>
+                    <h2><b>Don't have an account?</b><a class="navbar-link" href="{% url 'signup' %}"><b>Register here!</b></a></h2>
+                    <a href="{% url 'password_reset' %}" class="btn btn-link">Forgot your password?</a>
+                  <p class="sign-up">
+                  &copy; <a target="_blank" rel="noreferrer noopener" href="">Bosch EBB hardware tracking tool </a>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- row ends -->
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

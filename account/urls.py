@@ -1,5 +1,6 @@
 from django.urls import path
 from .import views
+from django.urls import path, re_path
 #from BoschEBBAsset.BoschEBBAsset import settings
 from django.conf.urls.static import static
 
@@ -11,9 +12,36 @@ urlpatterns = [
     #path('register/', views.register,name="register_url"),
     #path('logout/',LogoutView.as_view(next_page='Dashboard'),name="logout"),
 
-    path('', views.regform, name='registration form'),
-    path('update/', views.updateProfile, name='updateform'),
-    path('file/', views.excelUpload, name='file')
+    path("asset_search/", views.asset_search, name="asset_search"),
+    path("asset_search_display/", views.asset_search_display, name="asset_search_display"),
+    path('add/', views.add_asset, name="add_asset"),
+    path('setup', views.setup, name="setup"),
+    path('export', views.export_xls, name='export'),
+    path('export_SET', views.export_xlsset, name='export_set'),
+    path('export_pdf', views.export_pdf, name='export_pdf'),
+    path('export_pdf_set', views.export_pdfset, name='export_pdf_set'),
+    path('import_xls', views.import_xls, name='import_xls'),
+    #path('calendar_test', views.calendar_test, name='calendar_test'),
+    path('calendar/', views.CalendarView.as_view(), name='calendar'),
+    path('add_eventmember/<int:event_id>', views.add_eventmember, name='add_eventmember'),
+    path('event/new/', views.create_event, name='event_new'),
+    path('event/<int:event_id>/details/', views.event_details, name='event-detail'),
+    path('event/edit/<int:pk>/', views.EventEdit.as_view(), name='event_edit'),
+    path('event/<int:pk>/remove', views.EventMemberDeleteView.as_view(), name="remove_event"),
+    path('event_table/',views.event_table,name='event-table'),
+    path('delete/<int:pk>', views.EventDeleteView.as_view(), name='event-delete'),
+    path("feedback/", views.feedback, name="feedback"),
+    path('table/',views.table,name='tablepage'),
+    path('table1/',views.setup_display,name='setuptable'),
+    path('content/',views.setup_book,name='bookevent'),
+    path('settings/',views.settings,name='settings'),
+    path('delete_asset/<int:id>',views.delete_asset),
+    path('edit_asset/<int:id>', views.edit_asset,name='edit_asset'),
+    path('delete_setup/<id>', views.delete_setup),
+    path('edit_setup/<id>', views.edit_setup),
+    # Matches any html file
+    path('', views.index, name='home'),
+    re_path(r'^.*\.*', views.pages, name='pages'),
 ]
 #if settings.DEBUG:
 #    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
